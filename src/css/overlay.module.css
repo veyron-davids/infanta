@@ -1,0 +1,125 @@
+.container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.container__inside {
+  display: flex;
+  flex-direction: column;
+  width: 35rem;
+  position: fixed;
+  z-index: 30000;
+  height: auto;
+  background: white;
+  top: 15%;
+  left: 33%;
+  padding: 1.5rem;
+}
+
+.overlay__title {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.overlay__title > span {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.overlay__list {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.overlay__list__icons {
+  font-size: 2rem;
+  display: flex;
+  margin-left: auto;
+  color: #232f3e;
+}
+
+.shadow {
+  cursor: pointer;
+  box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
+  -webkit-box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
+  -moz-box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
+}
+
+.overlay__list__icons > span {
+  text-align: center;
+  font-size: 1.1rem;
+  margin: auto 10px;
+  color: black;
+  font-weight: bold;
+}
+.overlay__list__desc {
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.overlay__buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+.overlay__buttons__one {
+  flex: 1;
+  text-transform: uppercase;
+  height: 3rem;
+  background-color: white;
+  color: black;
+  margin-right: 1rem;
+  box-shadow: 0 3px 7px 0 rgb(0 0 0 / 13%);
+  outline: white !important;
+  cursor: pointer;
+  font-weight: bold;
+}
+.overlay__buttons__one:hover {
+  background-color: #ffc0c0;
+}
+.overlay__buttons__two {
+  flex: 1;
+  text-transform: uppercase;
+  height: 3rem;
+  background-color: #971a1a;
+  color: white;
+  outline: #232f3e;
+  box-shadow: 0 3px 7px 0 rgb(0 0 0 / 13%);
+  cursor: pointer;
+  font-weight: bold;
+}
+.overlay__buttons__two:hover {
+  background-color: #232f3e;
+}
+
+.overlay__buttons > button:focus {
+  outline: none;
+  border: none;
+}
+.overlay__buttons > button {
+  outline: none;
+  border: none;
+}
+
+.overlay__close {
+  cursor: pointer;
+}

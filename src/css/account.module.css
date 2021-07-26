@@ -1,0 +1,229 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+.container__one {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  background-color: #232f3e;
+}
+.container__two {
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+}
+
+.particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.logo {
+  position: relative;
+  margin-top: 0;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+#span {
+  font-family: "Alex Brush", cursive;
+  color: white;
+  font-size: 9rem;
+  -webkit-animation: focus-in-contract-bck 1s
+    cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s both;
+  animation: focus-in-contract-bck 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s
+    both;
+}
+
+#caption {
+  font-family: "Alex Brush", cursive;
+  color: white;
+  font-size: 2rem;
+  margin-left: 150px;
+  margin-top: 0;
+  -webkit-animation: tracking-in-contract-bck-bottom 1s
+    cubic-bezier(0.215, 0.61, 0.355, 1) 1s both;
+  animation: tracking-in-contract-bck-bottom 1s
+    cubic-bezier(0.215, 0.61, 0.355, 1) 1s both;
+}
+
+.signin__cont {
+  display: flex;
+  position: relative;
+  z-index: 1000;
+  padding-top: 40px;
+  /* justify-content: center; */
+  align-items: center;
+  flex-flow: column;
+  width: 90%;
+  height: 75vh;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* padding: 20px 0; */
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.sign__title {
+  align-self: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.button {
+  padding: 20px;
+}
+
+.details {
+  display: flex;
+  font-size: 15px;
+  align-items: center;
+  margin-top: 30px;
+  text-align: center;
+  color: black;
+}
+
+.sign__in__container {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.custom__button__in {
+  width: 100%;
+  height: 50px;
+  letter-spacing: 0.5px;
+  line-height: 50px;
+  padding: 0 35px 0 35px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #232f3e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  outline: 1px dotted #232f3e;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+span {
+  padding-right: 5px;
+}
+
+.field {
+  width: 100%;
+}
+
+.reset {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30px;
+  margin-top: 25px;
+  font-size: 0.875rem;
+  padding-left: 6px;
+}
+
+.reset span {
+  color: #232f3e;
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  width: auto;
+}
+
+.check > input {
+  height: 20px;
+  color: #232f3e;
+}
+
+.check > label {
+  font-size: 0.875rem;
+  width: 100px;
+  display: flex;
+}
+
+@-webkit-keyframes focus-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(300px);
+    transform: translateZ(300px);
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(12px);
+    transform: translateZ(12px);
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+@keyframes focus-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(300px);
+    transform: translateZ(300px);
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(12px);
+    transform: translateZ(12px);
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes tracking-in-contract-bck-bottom {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px) translateY(300px);
+    transform: translateZ(400px) translateY(300px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0) translateY(0);
+    transform: translateZ(0) translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes tracking-in-contract-bck-bottom {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px) translateY(300px);
+    transform: translateZ(400px) translateY(300px);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    -webkit-transform: translateZ(0) translateY(0);
+    transform: translateZ(0) translateY(0);
+    opacity: 1;
+  }
+}
