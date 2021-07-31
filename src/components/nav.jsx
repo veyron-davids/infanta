@@ -23,7 +23,7 @@ const Nav = ({ one, two, three, four }) => {
       </NavLink>
       <ul id={nav.ul}>
         <NavLink
-          to={`${currentUser ? "/profile" : "/account/signin"}`}
+          to={`${currentUser ? "/profile/inbox" : "/account/signin"}`}
           id={nav.li}
           style={{ textDecoration: "none" }}
         >

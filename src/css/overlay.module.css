@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20000;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -19,7 +19,7 @@
   flex-direction: column;
   width: 35rem;
   position: fixed;
-  z-index: 30000;
+  z-index: 1200;
   height: auto;
   background: white;
   top: 15%;
@@ -50,8 +50,11 @@
 .overlay__list__icons {
   font-size: 2rem;
   display: flex;
-  margin-left: auto;
+  justify-content: space-between;
+  align-items: center;
   color: #232f3e;
+  position: relative;
+  width: 20%;
 }
 
 .shadow {
@@ -64,7 +67,7 @@
 .overlay__list__icons > span {
   text-align: center;
   font-size: 1.1rem;
-  margin: auto 10px;
+  /* margin: auto 10px; */
   color: black;
   font-weight: bold;
 }
@@ -100,7 +103,7 @@
   flex: 1;
   text-transform: uppercase;
   height: 3rem;
-  background-color: #971a1a;
+  background-color: #232f3e;
   color: white;
   outline: #232f3e;
   box-shadow: 0 3px 7px 0 rgb(0 0 0 / 13%);
@@ -122,4 +125,32 @@
 
 .overlay__close {
   cursor: pointer;
+}
+
+.ring {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0px;
+  left: 33%;
+}
+.ring:after {
+  content: " ";
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 2px solid black;
+  border-color: #232f3e transparent #232f3e transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

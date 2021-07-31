@@ -4,7 +4,7 @@ import prod from "../css/productCont.module.css";
 import { selectAllProducts } from "../store/product-slice";
 import Card from "./card";
 
-const CatTwo = () => {
+const CatThree = () => {
   const products = useSelector(selectAllProducts);
 
   return (
@@ -15,4 +15,4 @@ const CatTwo = () => {
   );
 };
 
-export default CatTwo;
+export default CatThree;

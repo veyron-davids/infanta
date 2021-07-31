@@ -1,36 +1,119 @@
-import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
-import React from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import React, { useEffect, useState } from "react";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import over from "../css/overlay.module.css";
-import { handleClick } from "../store/product-slice";
+import {
+  addToCart,
+  fetchCart,
+  handleClick,
+  onError,
+  onSuccess,
+  selectCart,
+  selectFail,
+  selectItemToAdd,
+  selectLoading,
+  selectSuccess,
+} from "../store/cart-slice";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Overlay = () => {
+  const item = useSelector(selectItemToAdd);
+  const cart = useSelector(selectCart);
+  const loading = useSelector(selectLoading);
+  const success = useSelector(selectSuccess);
+  const error = useSelector(selectFail);
   const dispatch = useDispatch();
+  const [small, setSmall] = useState(0);
+  const [medium, setMedium] = useState(0);
+  const [large, setLarge] = useState(0);
+  const [XL, setXL] = useState(0);
+  const [XXL, setXXL] = useState(0);
 
-  const config = {
-    public_key: "FLWPUBK-0495d651437d10dea892e04e98e09dcd-X",
-    tx_ref: Date.now(),
-    amount: 100,
-    currency: "NGN",
-    payment_options: "card,mobilemoney,ussd,banktransfer,account,mpesa",
-    customer: {
-      name: "joel ugwumadu",
-      email: "user@gmail.com",
-      phonenumber: "07064586146",
-    },
-    customizations: {
-      title: "Infanta Global Wears",
-      description: "Payment for items in cart",
-      logo: "https://shopper-io-bucket.s3.us-east-2.amazonaws.com/In..svg",
-    },
+  const [gts, setGts] = useState(false);
+
+  const smallIndex = cart.findIndex((it) => {
+    const idx = it.productId == item && it.size == "small";
+    if (idx >= 0) {
+      return idx;
+    }
+  });
+  const mediumIndex = cart.findIndex((it) => {
+    const idx = it.productId == item && it.size == "m";
+    if (idx >= 0) {
+      return idx;
+    }
+  });
+  const largeIndex = cart.findIndex((it) => {
+    const idx = it.productId == item && it.size == "l";
+    if (idx >= 0) {
+      return idx;
+    }
+  });
+  const XLIndex = cart.findIndex((it) => {
+    const idx = it.productId == item && it.size == "xl";
+    if (idx >= 0) {
+      return idx;
+    }
+  });
+  const XXLIndex = cart.findIndex((it) => {
+    const idx = it.productId == item && it.size == "xxl";
+    if (idx >= 0) {
+      return idx;
+    }
+  });
+
+  useEffect(() => {
+    if (cart[mediumIndex]) setMedium(cart[mediumIndex].quantity);
+    if (cart[largeIndex]) setLarge(cart[largeIndex].quantity);
+    if (cart[XLIndex]) setXL(cart[XLIndex].quantity);
+    if (cart[XXLIndex]) setXXL(cart[XXLIndex].quantity);
+    dispatch(fetchCart());
+  }, [dispatch, item, cart]);
+
+  const handleSuccessClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(onSuccess());
   };
-
-  const handleFlutterPayment = useFlutterwave(config);
+  const handleErrorClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    dispatch(onError());
+  };
 
   return (
     <React.Fragment>
+      {success && (
+        <Snackbar
+          open={success}
+          autoHideDuration={3000}
+          onClose={handleSuccessClose}
+        >
+          <Alert onClose={handleSuccessClose} severity="success">
+            Product has been added to cart!
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={error}
+          autoHideDuration={3000}
+          onClose={handleErrorClose}
+        >
+          <Alert onClose={handleErrorClose} severity="error">
+            Something went wrong!
+          </Alert>
+        </Snackbar>
+      )}
+
       <div className={over.container} onClick={() => dispatch(handleClick())}>
         {" "}
       </div>
@@ -48,9 +131,25 @@ const Overlay = () => {
             <span>₦5,000</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} disabled />
-            <span>0</span>
-            <AiFillPlusSquare className={over.shadow} />
+            <AiFillMinusSquare className={over.shadow} disable />
+            {gts ? (
+              <div className={over.ring}></div>
+            ) : (
+              <span>{cart[smallIndex] && cart[smallIndex].quantity}</span>
+            )}
+            <AiFillPlusSquare
+              className={over.shadow}
+              onClick={() => {
+                setGts(true);
+                dispatch(
+                  addToCart({
+                    productID: item,
+                    size: "small",
+                  })
+                );
+                setGts(false);
+              }}
+            />
           </div>
         </div>
         <div className={over.overlay__list}>
@@ -60,8 +159,22 @@ const Overlay = () => {
           </div>
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare className={over.shadow} />
-            <span>0</span>
-            <AiFillPlusSquare className={over.shadow} />
+            {loading ? (
+              <div className={over.ring}></div>
+            ) : (
+              <span>{medium}</span>
+            )}
+            <AiFillPlusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  addToCart({
+                    productID: item,
+                    size: "m",
+                  })
+                );
+              }}
+            />
           </div>
         </div>
         <div className={over.overlay__list}>
@@ -71,8 +184,18 @@ const Overlay = () => {
           </div>
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare className={over.shadow} />
-            <span>0</span>
-            <AiFillPlusSquare className={over.shadow} />
+            {loading ? <div className={over.ring}></div> : <span>{large}</span>}
+            <AiFillPlusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  addToCart({
+                    productID: item,
+                    size: "l",
+                  })
+                );
+              }}
+            />
           </div>
         </div>
         <div className={over.overlay__list}>
@@ -82,8 +205,18 @@ const Overlay = () => {
           </div>
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare className={over.shadow} />
-            <span>0</span>
-            <AiFillPlusSquare className={over.shadow} />
+            {loading ? <div className={over.ring}></div> : <span>{XL}</span>}
+            <AiFillPlusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  addToCart({
+                    productID: item,
+                    size: "xl",
+                  })
+                );
+              }}
+            />
           </div>
         </div>
         <div className={over.overlay__list}>
@@ -93,8 +226,18 @@ const Overlay = () => {
           </div>
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare className={over.shadow} />
-            <span>0</span>
-            <AiFillPlusSquare className={over.shadow} />
+            {loading ? <div className={over.ring}></div> : <span>{XXL}</span>}
+            <AiFillPlusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  addToCart({
+                    productID: item,
+                    size: "xxl",
+                  })
+                );
+              }}
+            />
           </div>
         </div>
         <div className={over.overlay__buttons}>
@@ -104,18 +247,7 @@ const Overlay = () => {
           >
             CONTINUE SHOPPING
           </button>
-          <button
-            className={over.overlay__buttons__two}
-            onClick={() =>
-              handleFlutterPayment({
-                callback: (response) => {
-                  console.log(response);
-                  closePaymentModal(); // this will close the modal programmatically
-                },
-                onClose: () => {},
-              })
-            }
-          >
+          <button className={over.overlay__buttons__two}>
             VIEW CART AND CHECK OUT
           </button>
         </div>

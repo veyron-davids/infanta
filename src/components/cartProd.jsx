@@ -39,7 +39,7 @@ const CartProd = () => {
         </div>
       </div>
       <div className={citem.custom__select}>
-        <Dropdown drop={qty} styling={citem.qty} />
+        {/* <Dropdown drop={qty} styling={citem.qty} /> */}
       </div>
       <div className={citem.container__price}>₦20,000</div>
       <div className={citem.container__total}>

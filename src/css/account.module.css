@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   width: 60%;
+  height: 100vh;
   background-color: #232f3e;
 }
 .container__two {
@@ -48,10 +49,10 @@
   font-size: 2rem;
   margin-left: 150px;
   margin-top: 0;
-  -webkit-animation: tracking-in-contract-bck-bottom 1s
+  -webkit-animation: tracking-in-contract 0.8s
     cubic-bezier(0.215, 0.61, 0.355, 1) 1s both;
-  animation: tracking-in-contract-bck-bottom 1s
-    cubic-bezier(0.215, 0.61, 0.355, 1) 1s both;
+  animation: tracking-in-contract 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 1s
+    both;
 }
 
 .signin__cont {
@@ -59,7 +60,7 @@
   position: relative;
   z-index: 1000;
   padding-top: 40px;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
   flex-flow: column;
   width: 90%;
@@ -68,10 +69,23 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   /* padding: 20px 0; */
 }
+.signup__cont {
+  display: flex;
+  position: relative;
+  z-index: 1000;
+  padding-top: 40px;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  width: 90%;
+  height: 98vh;
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* padding: 20px 0; */
+}
 .form {
   display: flex;
   flex-direction: column;
-  margin-top: 70px;
   width: 100%;
   justify-content: space-between;
 }
@@ -96,11 +110,12 @@
 }
 
 .sign__in__container {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 40px;
 }
 
 .custom__button__in {
@@ -195,35 +210,29 @@ span {
   }
 }
 
-@-webkit-keyframes tracking-in-contract-bck-bottom {
+@-webkit-keyframes tracking-in-contract {
   0% {
     letter-spacing: 1em;
-    -webkit-transform: translateZ(400px) translateY(300px);
-    transform: translateZ(400px) translateY(300px);
     opacity: 0;
   }
   40% {
     opacity: 0.6;
   }
   100% {
-    -webkit-transform: translateZ(0) translateY(0);
-    transform: translateZ(0) translateY(0);
+    letter-spacing: normal;
     opacity: 1;
   }
 }
-@keyframes tracking-in-contract-bck-bottom {
+@keyframes tracking-in-contract {
   0% {
     letter-spacing: 1em;
-    -webkit-transform: translateZ(400px) translateY(300px);
-    transform: translateZ(400px) translateY(300px);
     opacity: 0;
   }
   40% {
     opacity: 0.6;
   }
   100% {
-    -webkit-transform: translateZ(0) translateY(0);
-    transform: translateZ(0) translateY(0);
+    letter-spacing: normal;
     opacity: 1;
   }
 }

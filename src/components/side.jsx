@@ -1,45 +1,50 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import side from "../css/side.module.css";
 
-const Side = () => {
-  const [loading, setLoading] = useState(false);
-
-  const handleLoading = () => {
-    setLoading();
-  };
-
+const Side = ({ data }) => {
   return (
     <div className={side.container}>
       <NavLink
-        to="/home/collections"
+        to={data.one.route}
         className={side.division__one}
         activeClassName={side.active}
         style={{ textDecoration: "none" }}
-        onClick={handleLoading}
       >
-        All Collections
+        {data.one.label}
       </NavLink>
       <NavLink
-        to="/home/girls"
+        to={data.two.route}
         className={side.division__one}
         activeClassName={side.active}
         style={{ textDecoration: "none" }}
-        onClick={handleLoading}
       >
-        Stylish Girls
+        {data.two.label}
       </NavLink>
       <NavLink
-        to="/boys"
         className={side.division__two}
+        to={data.three.route}
         activeClassName={side.active}
-        style={{ textDecoration: "none"}}
-        onClick={handleLoading}
+        style={{ textDecoration: "none" }}
       >
-        Cool Boys
+        {data.three.label}
       </NavLink>
-      <div className={side.division__three}>Vogue Ladies</div>
-      <div className={side.division__four}>Solid Men</div>
+      <NavLink
+        className={side.division__three}
+        to={data.four.route}
+        activeClassName={side.active}
+        style={{ textDecoration: "none" }}
+      >
+        {data.four.label}
+      </NavLink>
+      <NavLink
+        className={side.division__four}
+        to={data.five.route}
+        activeClassName={side.active}
+        style={{ textDecoration: "none" }}
+      >
+        {data.five.label}
+      </NavLink>
     </div>
   );
 };

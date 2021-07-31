@@ -3,7 +3,7 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import Carousel from "react-material-ui-carousel";
 import { useDispatch } from "react-redux";
 import prod from "../css/productCont.module.css";
-import { handleClick } from "../store/product-slice";
+import { handleClick, setItemToAdd } from "../store/cart-slice";
 
 const Card = ({ product }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,10 @@ const Card = ({ product }) => {
         </div>
         <div
           className={prod.details__cart}
-          onClick={() => dispatch(handleClick())}
+          onClick={() => {
+            dispatch(setItemToAdd(product._id));
+            dispatch(handleClick());
+          }}
         >
           <HiOutlineShoppingCart />
         </div>

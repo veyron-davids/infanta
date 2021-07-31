@@ -1,33 +1,10 @@
-import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
 
-const CssOutline = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "rgb(119, 24, 24)",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "rgb(119, 24, 24)",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "black",
-      },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
-      "&.Mui-focused fieldset": {
-        borderColor: "rgb(119, 24, 24)",
-      },
-    },
-  },
-})(FormControl);
 
 const CssTextField = withStyles({
   root: {
-    width: 340,
     "& label.Mui-focused": {
       color: "#232f3e;",
     },
@@ -58,6 +35,7 @@ const CustomInput = ({
   label,
   resetFError,
   error,
+  style,
   labelError,
   handleChange,
   values,
@@ -66,8 +44,9 @@ const CustomInput = ({
   return (
     <div>
       <CssTextField
-              label={label}
-              disabled
+        label={label}
+        disabled
+        className={style}
         autoFocus
         required
         type={type}
@@ -84,4 +63,3 @@ const CustomInput = ({
 };
 
 export default CustomInput;
-

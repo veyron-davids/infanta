@@ -143,17 +143,27 @@ const Signin = () => {
   };
 
   const getloginDetails = () => {
-    const storedEmail = localStorage.getItem("email");
-    const storedPassword = localStorage.getItem("password");
-    console.log(storedEmail, storedPassword);
-    if (!storedEmail && storedPassword) {
-      return;
-    } else {
+    const nEmail = localStorage.getItem("nemail");
+    const nPassword = localStorage.getItem("npassword");
+    if (nEmail && nPassword) {
       setValues({
-        email: storedEmail,
-        password: storedPassword,
+        email: nEmail,
+        password: nPassword,
       });
+    } else {
+      const storedEmail = localStorage.getItem("email");
+      const storedPassword = localStorage.getItem("password");
+      if (!storedEmail && storedPassword) {
+        return;
+      } else {
+        setValues({
+          email: storedEmail,
+          password: storedPassword,
+        });
+      }
     }
+    localStorage.removeItem("nemail");
+    localStorage.removeItem("npassword");
   };
 
   useEffect(() => {
@@ -260,13 +270,13 @@ const Signin = () => {
               <span>Forgot password?</span>
             </Link>
           </div>
-          <button className={sign.custom__button__in} onClick={doSubmit} >
+          <button className={sign.custom__button__in} onClick={doSubmit}>
             SIGN IN
           </button>
           <div className={sign.details}>
             <span>Don't have an account?</span>
             <Link
-              to="/register"
+              to="/account/signup"
               style={{ textDecoration: "none", color: "#dc143c" }}
             >
               Sign Up Now

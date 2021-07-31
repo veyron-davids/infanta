@@ -24,27 +24,30 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-const Dropdown = ({ drop, styling }) => {
+const Dropdown = ({ drop, styling, label, handle, disabled, error }) => {
   return (
     <CssTextField
       variant="outlined"
       className={styling}
       select
-      //   defaultValue={values.quantity}
+      disabled={disabled}
+      label={label}
+      onChange={(e) => {
+        handle(e.target.value);
+      }}
       SelectProps={{
         native: true,
       }}
       id="custom-css-outlined-input"
-      //   value={values.quantity}
-      //   onChange={handleChange("quantity")}
+      error={error}
     >
       {drop.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.value}
+        <option key={option} value={option}>
+          {option}
         </option>
       ))}
     </CssTextField>
   );
 };
 
-export default Dropdown;
+export default React.memo(Dropdown);

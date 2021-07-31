@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Loader from "./components/loader";
 import MiddleNavNoUser from "./components/middleNavNoUser";
 import MiddleNavUser from "./components/MiddleNavUser";
-import MiddleNav from "./components/MiddleNavUser";
 import Nav from "./components/nav";
 import NavTop from "./components/navTop";
 import Layout from "./layout/Layout";
@@ -19,16 +19,21 @@ import SignOut from "./pages/SignOut";
 import Wishlist from "./pages/Wishlist";
 import auth from "./services/authService";
 import { fetchUser } from "./store/auth-slice";
-import { selectOpen } from "./store/product-slice";
+import { getCart } from "./store/cart-slice";
+import { selectLoading } from "./store/product-slice";
 
 function App() {
   const currentUser = useSelector((state) => state.auth);
+  const loading = useSelector(selectLoading);
   const [opened, setOpened] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUser());
+    if (auth.getCurrentUser()) {
+      dispatch(getCart(auth.getCurrentUser().cart.items));
+    }
     // dispatch(fetchProducts());
     if (currentUser) {
       auth.autoLogout();
@@ -41,94 +46,105 @@ function App() {
     } else {
       setOpened(false);
     }
-    console.log(currPos.x);
-    console.log(currPos.y);
+    //   console.log(currPos.x);
+    //  console.log(currPos.y);
   });
 
   return (
-    <Switch>
-      <Route path="/account/signin" component={Account} />
-      <Route path="/account/signup" component={Account} />
-      <div>
-        {auth.getCurrentUser() && <NavTop one="SIGN OUT" two="WISHLIST" />}
-        {!auth.getCurrentUser() && <NavTop />}
-        {!auth.getCurrentUser() && (
-          <Nav one="Login" two="Register" three="Help" />
-        )}
-        {auth.getCurrentUser() && (
-          <Nav one="Profile" two="Orders" three="Help" four="four" />
-        )}
-        {opened && auth.getCurrentUser() && <MiddleNavUser />}
-        {opened && !auth.getCurrentUser() && <MiddleNavNoUser />}
-        <Layout>
-          {auth.getCurrentUser() ? (
-            <Route path="/cart/summary" component={Cart} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
+    <React.Fragment>
+      {loading && <Loader />}
+      <Switch>
+        <Route path="/account/signin" component={Account} />
+        <Route path="/account/signup" component={Account} />
+        <div>
+          {auth.getCurrentUser() && <NavTop one="SIGN OUT" two="WISHLIST" />}
+          {!auth.getCurrentUser() && <NavTop />}
+          {!auth.getCurrentUser() && (
+            <Nav one="Login" two="Register" three="Help" />
           )}
-          {auth.getCurrentUser() ? (
-            <Route path="/cart/delivery-details" component={Cart} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
+          {auth.getCurrentUser() && (
+            <Nav one="Profile" two="Orders" three="Help" four="four" />
           )}
-          {auth.getCurrentUser() ? (
-            <Route path="/cart/payment" component={Cart} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
-          )}
-          {auth.getCurrentUser() ? (
-            <Route path="/profile" component={Profile} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
-          )}
-          {auth.getCurrentUser() ? (
-            <Route path="/orders" component={Orders} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
-          )}
-          {auth.getCurrentUser() ? (
-            <Route path="/wishlist" component={Wishlist} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/account/signin",
-                // state: { from: props.location },
-              }}
-            />
-          )}
-          <Route path="/signout" component={SignOut} />
-          <Route path="/help" component={Help} />
-          <Route path="/home/girls" component={Home} />
-          <Route path="/home/collections" component={Home} />
-          <Redirect from="/" exact to="/home/collections" />
-        </Layout>
-      </div>
-    </Switch>
+          {opened && auth.getCurrentUser() && <MiddleNavUser />}
+          {opened && !auth.getCurrentUser() && <MiddleNavNoUser />}
+          <Layout>
+            {auth.getCurrentUser() ? (
+              <Route path="/cart/summary" component={Cart} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )}
+            {auth.getCurrentUser() ? (
+              <Route path="/cart/delivery-details" component={Cart} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )}
+            {auth.getCurrentUser() ? (
+              <Route path="/cart/payment" component={Cart} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )}
+            {/* {auth.getCurrentUser() ? (
+              <Route path="/profile" component={Profile} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )} */}
+            {auth.getCurrentUser() ? (
+              <Route path="/orders" component={Orders} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )}
+            {auth.getCurrentUser() ? (
+              <Route path="/wishlist" component={Wishlist} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/account/signin",
+                  // state: { from: props.location },
+                }}
+              />
+            )}
+            <Route path="/signout" component={SignOut} />
+            <Route path="/help" component={Help} />
+            <Route path="/profile/inbox" component={Profile} />
+            <Route path="/profile/personal-details" component={Profile} />
+            <Route path="/profile/address" component={Profile} />
+            <Route path="/profile/password-edit" component={Profile} />
+            <Route path="/profile/newsletter-preferences" component={Profile} />
+            <Route path="/home/girls-collections" component={Home} />
+            <Route path="/home/boys-collections" component={Home} />
+            <Route path="/home/ladies-collections" component={Home} />
+            <Route path="/home/men-collections" component={Home} />
+            <Route path="/home/collections" component={Home} />
+            <Redirect from="/" exact to="/home/collections" />
+          </Layout>
+        </div>
+      </Switch>
+    </React.Fragment>
   );
 }
 

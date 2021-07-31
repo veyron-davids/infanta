@@ -43,6 +43,7 @@
   color: white;
   -webkit-animation: wobble-ver-left 0.8s 3s both;
   animation: wobble-ver-left 0.8s 4s both;
+  z-index: 10000;
 }
 
 #li {

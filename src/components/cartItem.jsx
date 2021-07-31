@@ -15,7 +15,7 @@ const CartItem = () => {
         </div>
         <CartProd />
       </div>
-      <Summary title="PROCEED"/>
+      <Summary title="PROCEED" open={true} />
     </div>
   );
 };

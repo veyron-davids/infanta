@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { FETCH_VOGUE } from "../config";
+import http from "../services/httpService";
 
 const initialState = {
   products: [],
@@ -7,17 +8,22 @@ const initialState = {
   loading: false,
   total: 0,
   cartCount: 0,
-  open: false,
 };
 //PRODUCTS//
 
-// export const fetchProducts = createAsyncThunk(
-//   "products/fetchProducts",
-//   async () => {
-//     const response = await http.get("");
-//     return response.data.products;
-//   }
-// );
+export const fetchProducts = createAsyncThunk(
+  "products/fetchProducts",
+  async () => {
+    try {
+      const response = await http.get(FETCH_VOGUE);
+      localStorage.setItem("products", JSON.stringify(response.data.vogue));
+      return response.data.vogue;
+    } catch (error) {
+      console.log(error)
+      return JSON.parse(localStorage.getItem("products"));
+    }
+  }
+);
 
 // export const fetchCart = createAsyncThunk("products/fetchCart", async () => {
 //   const response = await http.get(GET_CART);
@@ -56,19 +62,16 @@ const productSlice = createSlice({
       });
     },
 
-    handleClick(state) {
-      if (state.open === true) {
-        state.open = false;
-      } else {
-        state.open = true;
-      }
-    },
   },
   extraReducers: {
-    // [fetchProducts.fulfilled]: (state, action) => {
-    //   state.products = action.payload;
-    // },
-
+    [fetchProducts.pending]: (state, action) => {
+      state.products = JSON.parse(localStorage.getItem("products"));
+      state.loading = true;
+    },
+    [fetchProducts.fulfilled]: (state, action) => {
+      state.products = action.payload;
+       state.loading = false;
+    },
     // [addToCart.pending]: (state, action) => {
     //   state.loading = true;
     // },
@@ -78,7 +81,6 @@ const productSlice = createSlice({
     //   state.cart.map((item) => {
     //     state.cartCount = Number(state.cartCount) + Number(item.quantity);
     //   });
-
     //   state.loading = false;
     // },
     // [addToCart.rejected]: (state, action) => {
@@ -115,10 +117,9 @@ const productSlice = createSlice({
   },
 });
 
-export const { getCartTotal, handleClick } = productSlice.actions;
+export const { getCartTotal, } = productSlice.actions;
 
 export default productSlice.reducer;
 
 export const selectAllProducts = (state) => state.products.products;
 export const selectLoading = (state) => state.products.loading;
-export const selectOpen = (state) => state.products.open;

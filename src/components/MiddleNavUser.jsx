@@ -19,7 +19,11 @@ const MiddleNavUser = () => {
         </div>
       </NavLink>
       <ul id={two.ul}>
-        <NavLink to="/profile" id={two.li} style={{ textDecoration: "none" }}>
+        <NavLink
+          to="/profile/inbox"
+          id={two.li}
+          style={{ textDecoration: "none" }}
+        >
           <li>Profile</li>
         </NavLink>
         <NavLink to="/orders" id={two.li} style={{ textDecoration: "none" }}>
