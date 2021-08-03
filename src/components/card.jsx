@@ -1,12 +1,17 @@
 import React from "react";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import Carousel from "react-material-ui-carousel";
-import { useDispatch } from "react-redux";
 import prod from "../css/productCont.module.css";
+import { useDispatch } from "react-redux";
 import { handleClick, setItemToAdd } from "../store/cart-slice";
 
 const Card = ({ product }) => {
   const dispatch = useDispatch();
+  function currencyFormat(num) {
+    return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
+  const price = currencyFormat(product.price);
 
   return (
     <div className={prod.card}>
@@ -18,7 +23,7 @@ const Card = ({ product }) => {
       <div className={prod.details}>
         <div className={prod.details__text}>
           <span>{product.pname}</span> <br />
-          <span>{product.price}</span>
+          <span>{price}</span>
         </div>
         <div
           className={prod.details__cart}

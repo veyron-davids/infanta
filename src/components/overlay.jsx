@@ -1,20 +1,23 @@
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import over from "../css/overlay.module.css";
 import {
   addToCart,
-  fetchCart,
   handleClick,
+  OnAdd,
   onError,
+  OnRemove,
   onSuccess,
-  selectCart,
+  removeFromCart,
   selectFail,
   selectItemToAdd,
   selectLoading,
+  selectProduct,
   selectSuccess,
 } from "../store/cart-slice";
 
@@ -24,57 +27,11 @@ function Alert(props) {
 
 const Overlay = () => {
   const item = useSelector(selectItemToAdd);
-  const cart = useSelector(selectCart);
+  const product = useSelector(selectProduct);
   const loading = useSelector(selectLoading);
   const success = useSelector(selectSuccess);
   const error = useSelector(selectFail);
   const dispatch = useDispatch();
-  const [small, setSmall] = useState(0);
-  const [medium, setMedium] = useState(0);
-  const [large, setLarge] = useState(0);
-  const [XL, setXL] = useState(0);
-  const [XXL, setXXL] = useState(0);
-
-  const [gts, setGts] = useState(false);
-
-  const smallIndex = cart.findIndex((it) => {
-    const idx = it.productId == item && it.size == "small";
-    if (idx >= 0) {
-      return idx;
-    }
-  });
-  const mediumIndex = cart.findIndex((it) => {
-    const idx = it.productId == item && it.size == "m";
-    if (idx >= 0) {
-      return idx;
-    }
-  });
-  const largeIndex = cart.findIndex((it) => {
-    const idx = it.productId == item && it.size == "l";
-    if (idx >= 0) {
-      return idx;
-    }
-  });
-  const XLIndex = cart.findIndex((it) => {
-    const idx = it.productId == item && it.size == "xl";
-    if (idx >= 0) {
-      return idx;
-    }
-  });
-  const XXLIndex = cart.findIndex((it) => {
-    const idx = it.productId == item && it.size == "xxl";
-    if (idx >= 0) {
-      return idx;
-    }
-  });
-
-  useEffect(() => {
-    if (cart[mediumIndex]) setMedium(cart[mediumIndex].quantity);
-    if (cart[largeIndex]) setLarge(cart[largeIndex].quantity);
-    if (cart[XLIndex]) setXL(cart[XLIndex].quantity);
-    if (cart[XXLIndex]) setXXL(cart[XXLIndex].quantity);
-    dispatch(fetchCart());
-  }, [dispatch, item, cart]);
 
   const handleSuccessClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -89,23 +46,42 @@ const Overlay = () => {
     dispatch(onError());
   };
 
+  function currencyFormat(num) {
+    return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
+  const price = product.productId ? currencyFormat(product.productId.price) : 0;
+
+  const refresh = () => {
+    setTimeout(() => {
+      window.location.reload();
+      console.log("run");
+    }, 1000);
+  };
+
+  // useEffect(() => {
+  //   if (item !== "") {
+  //     dispatch(setSlectedItem());
+  //   }
+  // }, []);
+
   return (
     <React.Fragment>
       {success && (
         <Snackbar
           open={success}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           onClose={handleSuccessClose}
         >
           <Alert onClose={handleSuccessClose} severity="success">
-            Product has been added to cart!
+            Processed Successfully!
           </Alert>
         </Snackbar>
       )}
       {error && (
         <Snackbar
           open={error}
-          autoHideDuration={3000}
+          autoHideDuration={2000}
           onClose={handleErrorClose}
         >
           <Alert onClose={handleErrorClose} severity="error">
@@ -114,7 +90,15 @@ const Overlay = () => {
         </Snackbar>
       )}
 
-      <div className={over.container} onClick={() => dispatch(handleClick())}>
+      <div
+        className={over.container}
+        onClick={() =>
+          dispatch(() => {
+            handleClick();
+            refresh();
+          })
+        }
+      >
         {" "}
       </div>
       <div className={over.container__inside}>
@@ -128,26 +112,42 @@ const Overlay = () => {
         <div className={over.overlay__list}>
           <div className={over.overlay__list__desc}>
             <span>S</span>
-            <span>₦5,000</span>
+            <span>{price}</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} disable />
-            {gts ? (
+            <AiFillMinusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  removeFromCart({
+                    size: "small",
+                    productID: item,
+                  })
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnRemove({ spec: "small", id: item }));
+                  }
+                });
+              }}
+            />
+            {loading ? (
               <div className={over.ring}></div>
             ) : (
-              <span>{cart[smallIndex] && cart[smallIndex].quantity}</span>
+              <span>{product === null ? 0 : product.size.small}</span>
             )}
             <AiFillPlusSquare
               className={over.shadow}
               onClick={() => {
-                setGts(true);
                 dispatch(
                   addToCart({
-                    productID: item,
                     size: "small",
+                    productID: item,
                   })
-                );
-                setGts(false);
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnAdd({ spec: "small", id: item }));
+                  }
+                });
               }}
             />
           </div>
@@ -155,24 +155,43 @@ const Overlay = () => {
         <div className={over.overlay__list}>
           <div className={over.overlay__list__desc}>
             <span>M</span>
-            <span>₦5,000</span>
+            <span>{price}</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} />
+            <AiFillMinusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  removeFromCart({
+                    size: "medium",
+                    productID: item,
+                  })
+                ).then((data) => {
+                  console.log(data);
+                  if (data.payload) {
+                    dispatch(OnRemove({ spec: "medium", id: item }));
+                  }
+                });
+              }}
+            />
             {loading ? (
               <div className={over.ring}></div>
             ) : (
-              <span>{medium}</span>
+              <span>{product === null ? 0 : product.size.medium}</span>
             )}
             <AiFillPlusSquare
               className={over.shadow}
               onClick={() => {
                 dispatch(
                   addToCart({
+                    size: "medium",
                     productID: item,
-                    size: "m",
                   })
-                );
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnAdd({ spec: "medium", id: item }));
+                  }
+                });
               }}
             />
           </div>
@@ -180,20 +199,43 @@ const Overlay = () => {
         <div className={over.overlay__list}>
           <div className={over.overlay__list__desc}>
             <span>L</span>
-            <span>₦5,000</span>
+            <span>{price}</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} />
-            {loading ? <div className={over.ring}></div> : <span>{large}</span>}
+            <AiFillMinusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  removeFromCart({
+                    size: "large",
+                    productID: item,
+                  })
+                ).then((data) => {
+                  console.log(data);
+                  if (data.payload) {
+                    dispatch(OnRemove({ spec: "large", id: item }));
+                  }
+                });
+              }}
+            />
+            {loading ? (
+              <div className={over.ring}></div>
+            ) : (
+              <span>{product === null ? 0 : product.size.large}</span>
+            )}
             <AiFillPlusSquare
               className={over.shadow}
               onClick={() => {
                 dispatch(
                   addToCart({
+                    size: "large",
                     productID: item,
-                    size: "l",
                   })
-                );
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnAdd({ spec: "large", id: item }));
+                  }
+                });
               }}
             />
           </div>
@@ -201,20 +243,42 @@ const Overlay = () => {
         <div className={over.overlay__list}>
           <div className={over.overlay__list__desc}>
             <span>XL</span>
-            <span>₦5,000</span>
+            <span>{price}</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} />
-            {loading ? <div className={over.ring}></div> : <span>{XL}</span>}
+            <AiFillMinusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  removeFromCart({
+                    size: "xlarge",
+                    productID: item,
+                  })
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnRemove({ spec: "xlarge", id: item }));
+                  }
+                });
+              }}
+            />
+            {loading ? (
+              <div className={over.ring}></div>
+            ) : (
+              <span>{product === null ? 0 : product.size.xlarge}</span>
+            )}
             <AiFillPlusSquare
               className={over.shadow}
               onClick={() => {
                 dispatch(
                   addToCart({
+                    size: "xlarge",
                     productID: item,
-                    size: "xl",
                   })
-                );
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnAdd({ spec: "xlarge", id: item }));
+                  }
+                });
               }}
             />
           </div>
@@ -222,20 +286,42 @@ const Overlay = () => {
         <div className={over.overlay__list}>
           <div className={over.overlay__list__desc}>
             <span>XXL</span>
-            <span>₦5,000</span>
+            <span>{price}</span>
           </div>
           <div className={over.overlay__list__icons}>
-            <AiFillMinusSquare className={over.shadow} />
-            {loading ? <div className={over.ring}></div> : <span>{XXL}</span>}
+            <AiFillMinusSquare
+              className={over.shadow}
+              onClick={() => {
+                dispatch(
+                  removeFromCart({
+                    size: "xxlarge",
+                    productID: item,
+                  })
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnRemove({ spec: "xxlarge", id: item }));
+                  }
+                });
+              }}
+            />
+            {loading ? (
+              <div className={over.ring}></div>
+            ) : (
+              <span>{product === null ? 0 : product.size.xxlarge}</span>
+            )}
             <AiFillPlusSquare
               className={over.shadow}
               onClick={() => {
                 dispatch(
                   addToCart({
+                    size: "xxlarge",
                     productID: item,
-                    size: "xxl",
                   })
-                );
+                ).then((data) => {
+                  if (data.payload) {
+                    dispatch(OnAdd({ spec: "xxlarge", id: item }));
+                  }
+                });
               }}
             />
           </div>
@@ -247,9 +333,14 @@ const Overlay = () => {
           >
             CONTINUE SHOPPING
           </button>
-          <button className={over.overlay__buttons__two}>
-            VIEW CART AND CHECK OUT
-          </button>
+          <NavLink to="/cart/summary">
+            <button
+              className={over.overlay__buttons__two}
+              onClick={() => dispatch(handleClick())}
+            >
+              VIEW CART AND CHECK OUT
+            </button>
+          </NavLink>
         </div>
       </div>
     </React.Fragment>

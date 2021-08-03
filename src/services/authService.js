@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
-import { LOGIN_API, REGISTER_API } from "../config";
+import { LOGIN_API, REGISTER_API, USER } from "../config";
 import http from "./httpService";
+
 
 const tokenKey = "token";
 
@@ -20,6 +21,10 @@ export async function login(email, password) {
   const { data: jwt } = await http.post(LOGIN_API, { email, password });
   localStorage.setItem(tokenKey, jwt);
   localStorage.setItem("expiry", exp);
+}
+export async function getLatestUser() {
+  const response = await http.get(USER);
+  return response.data;
 }
 
 export function loginWithJwt(jwt) {
@@ -72,4 +77,5 @@ export default {
   getJwt,
   autoLogout,
   register,
+  getLatestUser,
 };

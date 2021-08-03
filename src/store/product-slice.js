@@ -25,10 +25,6 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-// export const fetchCart = createAsyncThunk("products/fetchCart", async () => {
-//   const response = await http.get(GET_CART);
-//   return response.data[0].cart.items;
-// });
 
 // export const addToCart = createAsyncThunk(
 //   "products/addToCart",
@@ -86,20 +82,7 @@ const productSlice = createSlice({
     // [addToCart.rejected]: (state, action) => {
     //   state.loading = false;
     // },
-    // [fetchCart.pending]: (state, action) => {
-    //   state.loading = true;
-    // },
-    // [fetchCart.fulfilled]: (state, action) => {
-    //   state.cartCount = 0;
-    //   state.cart = action.payload;
-    //   state.cart.map((item) => {
-    //     state.cartCount = Number(state.cartCount) + Number(item.quantity);
-    //   });
-    //   state.loading = false;
-    // },
-    // [fetchCart.rejected]: (state, action) => {
-    //   state.loading = false;
-    // },
+
     // [postCartUpdate.pending]: (state, action) => {
     //   state.fetching = true;
     // },

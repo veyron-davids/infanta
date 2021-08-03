@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import auth from "./authService";
 import MiddleNavNoUser from "./middleNavNoUser";
 import MiddleNavUser from "./middleNavUser";
+import {isAuth} from "../store/auth-slice"
 
 const MiddleNav = () => {
-  const currentUser = useSelector((state) => state.auth);
+  const currentUser = useSelector(isAuth);
   return (
     <React.Fragment>
-      {auth.getCurrentUser() ? <MiddleNavNoUser /> : <MiddleNavUser />}
+      {currentUser ? <MiddleNavNoUser /> : <MiddleNavUser />}
     </React.Fragment>
   );
 };

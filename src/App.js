@@ -18,27 +18,32 @@ import Profile from "./pages/Profile";
 import SignOut from "./pages/SignOut";
 import Wishlist from "./pages/Wishlist";
 import auth from "./services/authService";
-import { fetchUser } from "./store/auth-slice";
-import { getCart } from "./store/cart-slice";
-import { selectLoading } from "./store/product-slice";
+import { fetchUser, isAuth } from "./store/auth-slice";
+import { fetchCart, getProduct, selectOpen } from "./store/cart-slice";
+import {
+  fetchProducts,
+  selectAllProducts,
+  selectLoading,
+} from "./store/product-slice";
 
 function App() {
-  const currentUser = useSelector((state) => state.auth);
+  const currentUser = useSelector(isAuth);
+  const products = useSelector(selectAllProducts);
   const loading = useSelector(selectLoading);
+  const open = useSelector(selectOpen);
   const [opened, setOpened] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUser());
-    if (auth.getCurrentUser()) {
-      dispatch(getCart(auth.getCurrentUser().cart.items));
-    }
-    // dispatch(fetchProducts());
+    dispatch(getProduct());
+    dispatch(fetchCart());
+    dispatch(fetchProducts());
     if (currentUser) {
       auth.autoLogout();
     }
-  }, []);
+  }, [dispatch]);
 
   useScrollPosition(({ prevPos, currPos }) => {
     if (currPos.y <= -550) {

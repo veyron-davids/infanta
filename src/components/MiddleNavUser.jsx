@@ -3,8 +3,11 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logos } from "../assests/Infantas.svg";
 import two from "../css/middleNav.module.css";
+import { useSelector } from "react-redux";
+import { selectCartCount } from "../store/cart-slice";
 
 const MiddleNavUser = () => {
+    const cartTotal = useSelector(selectCartCount);
   return (
     <div className={two.nav}>
       <NavLink
@@ -41,7 +44,7 @@ const MiddleNavUser = () => {
             <HiOutlineShoppingCart className={two.shake} />
           </li>
         </NavLink>
-        <div className={two.count}>0</div>
+        <div className={two.count}>{cartTotal === 0 ? 0 : cartTotal}</div>
       </ul>
     </div>
   );

@@ -1,12 +1,15 @@
 import React from "react";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../assests/Infanta.svg";
-import { useSelector } from "react-redux";
 import nav from "../css/nav.module.css";
+import { isAuth } from "../store/auth-slice";
+import { selectCartCount } from "../store/cart-slice";
 
 const Nav = ({ one, two, three, four }) => {
- const currentUser = useSelector((state) => state.auth);
+  const currentUser = useSelector(isAuth);
+  const cartTotal = useSelector(selectCartCount);
 
   return (
     <div className={nav.nav}>
@@ -45,7 +48,7 @@ const Nav = ({ one, two, three, four }) => {
             id={nav.cart}
             style={{ textDecoration: "none" }}
           >
-            <div className={nav.count}>0</div>
+            <div className={nav.count}>{cartTotal === 0 ? 0 : cartTotal}</div>
             <li>
               <HiOutlineShoppingCart className={nav.shake} />
             </li>

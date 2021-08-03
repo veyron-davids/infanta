@@ -102,6 +102,7 @@
 .overlay__buttons__two {
   flex: 1;
   text-transform: uppercase;
+  outline: 1px solid #232f3e;
   height: 3rem;
   background-color: #232f3e;
   color: white;

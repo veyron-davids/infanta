@@ -1,35 +1,44 @@
+import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import citem from "../css/cartItem.module.css";
+import { selectUser } from "../store/auth-slice";
+import { selectCartAmount, selectCartCount } from "../store/cart-slice";
 import {
   selectAddressTouse,
-  setAddressToUse,
   selectLoading,
+  setAddressToUse,
 } from "../store/user-slice";
 import Dropdown from "./dropdown";
-import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
-import Spin from "./spin.jsx";
 
 const shipping = ["---", "Current Address", "New Address"];
 
 const Summary = ({ title, open, handleSubmit }) => {
+  const user = useSelector(selectUser);
   const useAdd = useSelector(selectAddressTouse);
   const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
   const route = useLocation();
-  console.log(route);
+  const totalQty = useSelector(selectCartCount);
+  const totalAmt = useSelector(selectCartAmount);
+
+  function currencyFormat(num) {
+    return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
+  const charge = currencyFormat(totalAmt);
 
   const config = {
-    public_key: "FLWPUBK-0495d651437d10dea892e04e98e09dcd-X",
+    public_key: "",
     tx_ref: Date.now(),
-    amount: 1,
+    amount: totalAmt,
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd,banktransfer,account,mpesa",
     customer: {
-      name: "joel ugwumadu",
-      email: "user@gmail.com",
-      phonenumber: "07064586146",
+      name: `${user && user.FirstName} ${user && user.LastName}`,
+      email: user && user.email,
+      phonenumber: user && user.phonenumber,
     },
     // redirect_url: "",
     customizations: {
@@ -50,8 +59,8 @@ const Summary = ({ title, open, handleSubmit }) => {
       <span>ORDER SUMMARY</span>
       <div className={citem.first}>
         <div className={citem.first__one}>
-          <div>ITEMS 2</div>
-          <div>N20, 000</div>
+          <div>ITEMS: {totalQty}</div>
+          <div>{charge}</div>
         </div>
         <div className={citem.first__two}>SHIPPING</div>
         <div className={citem.first__three}>
@@ -67,7 +76,7 @@ const Summary = ({ title, open, handleSubmit }) => {
       <div className={citem.second}>
         <div className={citem.first__one}>
           <div>TOTAL COST</div>
-          <div>N20, 000</div>
+          <div>{charge}</div>
         </div>
         <div className={citem.first__three}>
           <NavLink to="/cart/delivery-details">
@@ -81,8 +90,7 @@ const Summary = ({ title, open, handleSubmit }) => {
                           console.log(response);
                           closePaymentModal(); // this will close the modal programmatically
                         },
-                      onClose: () => {
-                        },
+                        onClose: () => {},
                       })
                     : ""
                 }

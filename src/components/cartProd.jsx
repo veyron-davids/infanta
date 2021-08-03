@@ -1,28 +1,28 @@
-
 import React from "react";
+import { useDispatch } from "react-redux";
 import citem from "../css/cartItem.module.css";
-import Dropdown from "./dropdown";
+import {
+  handleClick,
+  removeAll,
+  removeItem,
+  setItemToAdd,
+} from "../store/cart-slice";
 
-const qty = [
-  {
-    value: 1,
-  },
-  {
-    value: 2,
-  },
-  {
-    value: 3,
-  },
-  {
-    value: 4,
-  },
-  {
-    value: 5,
-  },
-];
+const CartProd = ({ product }) => {
+  const dispatch = useDispatch();
+  const productDetails = product.productId;
+  const sizes = product.size;
+  const prodPrice = productDetails.price ? productDetails.price : 0;
+  const prodTotal = product.total ? product.total : 0;
+  const ProductTotal = Number(prodTotal) * Number(prodPrice);
 
+  function currencyFormat(num) {
+    return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
-const CartProd = () => {
+  const price = productDetails ? currencyFormat(prodPrice) : 0;
+  const total = productDetails ? currencyFormat(ProductTotal) : 0;
+
   return (
     <div className={citem.container__details}>
       <div className={citem.container__img}>
@@ -31,20 +31,43 @@ const CartProd = () => {
           alt=""
         />
         <div className={citem.container__name}>
-          <div id={citem.span}>Best Product</div>
-          <div id={citem.span}>
-            Size <span>XL</span>
-          </div>
-          <div id={citem.span}>Code</div>
+          <div id={citem.span}>{productDetails.pname}</div>
         </div>
       </div>
       <div className={citem.custom__select}>
+        {sizes.small !== 0 && <span>Small: {sizes.small}</span>}
+        {sizes.medium !== 0 && <span>medium: {sizes.medium}</span>}
+        {sizes.large !== 0 && <span>large: {sizes.large}</span>}
+        {sizes.xlarge !== 0 && <span>xlarge: {sizes.xlarge}</span>}
+        {sizes.xxlarge !== 0 && <span>xxlarge: {sizes.xxlarge}</span>}
         {/* <Dropdown drop={qty} styling={citem.qty} /> */}
       </div>
-      <div className={citem.container__price}>₦20,000</div>
+      <div className={citem.container__price}>{price}</div>
       <div className={citem.container__total}>
-        <div id={citem.total}>₦20,000</div>
-        <div id={citem.space}>Remove</div>
+        <div id={citem.total}>{total}</div>
+        <div
+          id={citem.space}
+          onClick={() => {
+            dispatch(setItemToAdd(productDetails._id));
+            dispatch(handleClick());
+          }}
+        >
+          Edit
+        </div>
+        <div
+          id={citem.space}
+          onClick={() => {
+            dispatch(removeItem({ productID: productDetails._id })).then(
+              (data) => {
+                if (data.payload) {
+                  // dispatch(removeAll(productDetails._id));
+                }
+              }
+            );
+          }}
+        >
+          Remove
+        </div>
         <div id={citem.space}>Save for Later</div>
       </div>
     </div>
