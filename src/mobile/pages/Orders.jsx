@@ -1,13 +1,15 @@
 import React from "react";
-import Footer from "../components/footer";
-import ProfileTitle from "../components/profileTitle";
-import OrderCard from "../components/orderCard";
 import { useSelector } from "react-redux";
+import { Route } from "react-router-dom";
 import { selectAllProducts } from "../../store/product-slice";
+import ClosedOrders from "../components/closedOrders";
+import Footer from "../components/footer";
+import OpenOrders from "../components/openOrders";
+import PreCard from "../components/preCard";
+import ProfileTitle from "../components/profileTitle";
+import Random from "../components/random";
 import TitleTab from "../components/titleTab";
 import order from "../css/profile.module.css";
-import Random from "../components/random";
-import PreCard from "../components/preCard";
 
 const OrdersMobile = () => {
   const products = useSelector(selectAllProducts);
@@ -21,7 +23,8 @@ const OrdersMobile = () => {
           titleOne="OPEN ORDERS"
           titletwo="CLOSED ORDERS"
         />
-        <OrderCard />
+        <Route path="/profile/orders/open" component={OpenOrders} />
+        <Route path="/profile/orders/closed" component={ClosedOrders} />
       </div>
 
       <div className={order.collections}>

@@ -17,6 +17,7 @@ import OrderDetails from "../components/orderDetails";
 import InboxMobile from "../mobile/pages/Inbox";
 import ProfileMobile from "../mobile/pages/ProfileMobile";
 import OrdersMobile from "../mobile/pages/Orders";
+import ClosedOrders from "../mobile/components/closedOrders";
 
 const Profile = () => {
   const products = useSelector(selectAllProducts);
@@ -72,6 +73,7 @@ const Profile = () => {
       </div>
       <Route path="/profile/inbox" component={InboxMobile} />
       <Route path="/profile/orders/open" component={OrdersMobile} />
+      <Route path="/profile/orders/closed" component={OrdersMobile} />
       <Route exact path="/profile" component={ProfileMobile} />
     </React.Fragment>
   );
