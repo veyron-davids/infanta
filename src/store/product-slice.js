@@ -4,10 +4,7 @@ import http from "../services/httpService";
 
 const initialState = {
   products: [],
-  cart: [],
-  loading: false,
-  total: 0,
-  cartCount: 0,
+  grid: true,
 };
 //PRODUCTS//
 
@@ -19,12 +16,11 @@ export const fetchProducts = createAsyncThunk(
       localStorage.setItem("products", JSON.stringify(response.data.vogue));
       return response.data.vogue;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return JSON.parse(localStorage.getItem("products"));
     }
   }
 );
-
 
 // export const addToCart = createAsyncThunk(
 //   "products/addToCart",
@@ -51,13 +47,9 @@ const productSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    getCartTotal(state, action) {
-      state.cart.map((ctx) => {
-        state.total =
-          Number(ctx.productId.price * Number(ctx.quantity)) + state.total;
-      });
-    },
-
+    switchView(state) {
+      state.grid = !state.grid
+    }
   },
   extraReducers: {
     [fetchProducts.pending]: (state, action) => {
@@ -66,7 +58,7 @@ const productSlice = createSlice({
     },
     [fetchProducts.fulfilled]: (state, action) => {
       state.products = action.payload;
-       state.loading = false;
+      state.loading = false;
     },
     // [addToCart.pending]: (state, action) => {
     //   state.loading = true;
@@ -100,9 +92,11 @@ const productSlice = createSlice({
   },
 });
 
-export const { getCartTotal, } = productSlice.actions;
+export const { getSlicedNext, switchView } = productSlice.actions;
 
 export default productSlice.reducer;
 
 export const selectAllProducts = (state) => state.products.products;
+export const selectAllSlice = (state) => state.products.sliced;
 export const selectLoading = (state) => state.products.loading;
+export const selectGrid = (state) => state.products.grid;

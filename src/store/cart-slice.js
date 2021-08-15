@@ -42,10 +42,13 @@ export const removeFromCart = createAsyncThunk(
     return response.data.response;
   }
 );
-export const removeItem = createAsyncThunk("products/removeItem", async (prod) => {
-  const response = await http.post(REMOVE_ITEM, prod);
-  return response.data.response;
-});
+export const removeItem = createAsyncThunk(
+  "products/removeItem",
+  async (prod) => {
+    const response = await http.post(REMOVE_ITEM, prod);
+    return response.data.response;
+  }
+);
 
 export const fetchCart = createAsyncThunk("products/fetchCart", async () => {
   const response = await http.get(GET_CART);
@@ -107,6 +110,7 @@ const cartSlice = createSlice({
       //   });
       // }
     },
+
     getProduct(state, action) {
       state.products = JSON.parse(localStorage.getItem("products"));
     },
@@ -197,9 +201,13 @@ const cartSlice = createSlice({
     },
     removeAll(state, action) {
       const { id } = action.payload;
-      for (let i = 0; i <= state.cart.length; i++) {
-        if (state.cart[i].productId._id == id) state.cart.splice(i, 1);
-      }
+      const cartProductIndex =
+        state.cart.length !== 0 &&
+        state.cart.findIndex((cp) => {
+          return cp.productId._id == id;
+        });
+
+      state.cart.splice(cartProductIndex, 1);
       state.cartCount = 0;
       state.totalAmt = 0;
       state.cart.map((item) => {
@@ -209,6 +217,9 @@ const cartSlice = createSlice({
             Number(item.productId ? item.productId.price : 0) +
           Number(state.totalAmt);
       });
+    },
+    emptyCart(state, action) {
+      state.cart = [];
     },
   },
 
@@ -280,6 +291,7 @@ export const {
   OnRemove,
   getProduct,
   removeAll,
+  emptyCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

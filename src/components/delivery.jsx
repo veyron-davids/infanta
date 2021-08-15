@@ -1,18 +1,13 @@
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { list } from "../assests/states";
 import deliver from "../css/delivery.module.css";
-import auth from "../services/authService";
-import {
-  getLGA,
-  getState,
-  selectAddressTouse,
-  selectLGA,
-  selectStates,
-  setLGA,
-  updateAddress
-} from "../store/user-slice";
+import { selectAddressTouse, selectUser } from "../store/auth-slice";
+import { fetchCart } from "../store/cart-slice";
 import Dropdown from "./dropdown";
 import Summary from "./summary";
 
@@ -38,53 +33,69 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Delivery = () => {
-  const [user, setUser] = useState();
-  const states = useSelector(selectStates);
+  const user = useSelector(selectUser);
   const useAdd = useSelector(selectAddressTouse);
-  const LGA = useSelector(selectLGA);
+  const [defaultAdd, setDefaultAdd] = useState(null);
   const [open, setOpen] = useState(false);
-  const [selectedState, setSelectedState] = useState(null);
-  const [selectedLGA, setSelectedLGA] = useState(null);
   const [values, setValues] = useState({
-    FirstName: auth.getCurrentUser()["FirstName"],
-    LastName: auth.getCurrentUser()["LastName"],
-    email: auth.getCurrentUser()["email"],
-    phoneNumber: auth.getCurrentUser()["phoneNumber"],
-    address: auth.getCurrentUser()["delivery"]["address"],
-    additional: auth.getCurrentUser()["delivery"]["additional"],
-    state: auth.getCurrentUser()["delivery"]["state"],
-    city: auth.getCurrentUser()["delivery"]["city"],
+    FirstName: user && user.FirstName,
+    LastName: user && user.LastName,
+    email: user && user.email,
+    phoneNumber: user && user.phoneNumber,
+    addressName: "",
+    additional: "",
+    state: "Abia",
+    city: "",
   });
+  const states = Object.keys(list);
+  const [LGA, setLGA] = useState(list[values.state]);
+  const [error, setError] = useState(false);
   const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(!open);
   };
 
-  const getUser = async () => {
-    const data = await auth.getCurrentUser();
-    setUser(data);
+  const displayError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
   };
+
+  const getDefaultAdd = () => {
+    if (user && user.address.length === 1) {
+      setDefaultAdd(user.address[0]);
+    } else if (user && user.address.length > 1) {
+      user &&
+        user.address.map((item) => {
+          if (item.default === true) {
+            setDefaultAdd(item);
+          }
+        });
+    } else if (user.address.length === 0 && useAdd === true) {
+      setError(true);
+    }
+  };
+
+  console.log(defaultAdd);
   console.log(user);
 
   useEffect(() => {
-    getUser();
-    if (selectedState !== null) {
-      dispatch(getState(selectedState));
-      dispatch(setLGA());
-    }
-    if (selectedLGA !== null) {
-      dispatch(getLGA(selectedLGA));
-    }
-  }, [dispatch, selectedState, selectedLGA, useAdd]);
+    getDefaultAdd();
+    dispatch(fetchCart());
+  }, [dispatch, useAdd]);
 
   const handleSelectState = (state) => {
-    setSelectedState(state);
     values.state = state;
+    setLGA(list[state]);
   };
   const handleSelectLGA = (state) => {
-    setSelectedLGA(state);
     values.city = state;
   };
 
@@ -95,11 +106,18 @@ const Delivery = () => {
   const doSubmit = (e) => {
     console.log(values);
     e.preventDefault();
-     dispatch(updateAddress(values));
+    //  dispatch(updateAddress(values));
   };
 
   return (
     <div className={deliver.container}>
+      {error && (
+        <Snackbar open={error} autoHideDuration={3000} onClose={displayError}>
+          <Alert onClose={displayError} severity="error">
+            Please add an address to your account
+          </Alert>
+        </Snackbar>
+      )}
       <div className={deliver.container__one}>
         <span>Shipping Information</span>
         <form>
@@ -131,7 +149,7 @@ const Delivery = () => {
           <div className={deliver.container__form}>
             <CssTextField
               className={deliver.field}
-              disabled={useAdd}
+              disabled={true}
               label="Phone Number"
               variant="outlined"
               required
@@ -142,7 +160,7 @@ const Delivery = () => {
             <CssTextField
               className={deliver.field}
               label="Email"
-              disabled={useAdd}
+              disabled={true}
               variant="outlined"
               required
               id="custom-css-outlined-input"
@@ -150,28 +168,49 @@ const Delivery = () => {
               onChange={handleChange("email")}
             />
           </div>
-          <div className={deliver.container__form}>
-            <CssTextField
-              className={deliver.field}
-              disabled={useAdd}
-              label="Address"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.address}
-              onChange={handleChange("address")}
-            />
-            <CssTextField
-              className={deliver.field}
-              label="Additional Info"
-              disabled={useAdd}
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.additional}
-              onChange={handleChange("additional")}
-            />
-          </div>
+          {!useAdd ? (
+            <div className={deliver.container__form}>
+              <CssTextField
+                className={deliver.field}
+                label="Address"
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                value={values.addressName}
+                onChange={handleChange("address")}
+              />
+              <CssTextField
+                className={deliver.field}
+                label="Additional Info"
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                value={values.additional}
+                onChange={handleChange("additional")}
+              />
+            </div>
+          ) : (
+            <div className={deliver.container__form}>
+              <CssTextField
+                className={deliver.field}
+                disabled={true}
+                label="Address"
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                value={defaultAdd && defaultAdd.addressName}
+              />
+              <CssTextField
+                className={deliver.field}
+                label="Additional Info"
+                disabled={true}
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                value={defaultAdd && defaultAdd.additional}
+              />
+            </div>
+          )}
           {!useAdd ? (
             <div className={deliver.container__form}>
               {states && (
@@ -200,7 +239,7 @@ const Delivery = () => {
                 variant="outlined"
                 required
                 id="custom-css-outlined-input"
-                value={values.state}
+                value={defaultAdd && defaultAdd.state}
               />
               <CssTextField
                 className={deliver.field}
@@ -209,7 +248,7 @@ const Delivery = () => {
                 variant="outlined"
                 required
                 id="custom-css-outlined-input"
-                value={values.city}
+                value={defaultAdd && defaultAdd.city}
               />
             </div>
           )}

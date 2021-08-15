@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Snackbar from "@material-ui/core/Snackbar";
 import {
   createMuiTheme,
   ThemeProvider,
@@ -13,10 +14,12 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import MuiAlert from "@material-ui/lab/Alert";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import sign from "../css/account.module.css";
+import SignIn from "../mobile/pages/SignIn";
 import auth from "../services/authService";
 
 const CssTextField = withStyles({
@@ -105,6 +108,10 @@ const theme = createMuiTheme({
   },
 });
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Signin = () => {
   const [values, setValues] = useState({
     email: "",
@@ -113,6 +120,7 @@ const Signin = () => {
     checker: true,
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
 
@@ -140,6 +148,13 @@ const Signin = () => {
   };
   const resetMailError = () => {
     setEmailError(null);
+  };
+
+  const displayError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setError(false);
   };
 
   const getloginDetails = () => {
@@ -180,11 +195,10 @@ const Signin = () => {
     setEmailError(null);
     setPasswordError(null);
     try {
-      if (
-        values.email.trim().length === 0 ||
-        values.password.trim().length === 0
-      ) {
+      if (values.email.trim().length === 0) {
         setEmailError("This field is required");
+        return;
+      } else if (values.password.trim().length === 0) {
         setPasswordError("This field is required");
         return;
       } else {
@@ -195,96 +209,113 @@ const Signin = () => {
       }
     } catch (err) {
       // setValidationError();
+      if (err) {
+        setError(true);
+      }
     }
   };
 
   return (
-    <div className={sign.container__two}>
-      <div className={sign.signin__cont}>
-        <div className={sign.sign__title}>
-          <span>Account Login </span>
-        </div>
-        <div className={sign.sign__in__container}>
-          <form className={sign.form}>
-            <CssTextField
-              className={sign.field}
-              autoFocus
-              label="Email Address"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              onBlur={resetMailError}
-              value={values.email}
-              onChange={handleChange("email")}
-              helperText={emailError}
-              error={emailError != null}
-            />
-            <br />
-            <CssOutline variant="outlined" required>
-              <InputLabel htmlFor="outlined-adornment-password">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                className={sign.field}
-                required
-                onBlur={resetPassError}
-                helperText={passwordError}
-                error={passwordError != null}
-                value={values.password}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                labelWidth={100}
-              />
-            </CssOutline>
-          </form>
-          <div className={sign.reset}>
-            <ThemeProvider theme={theme}>
-              <CssChecked
-                control={
-                  <GreenCheckbox
-                    checked={values.checker}
-                    onChange={handleChangeCheck}
-                    name="checker"
-                  />
-                }
-                label="Remember me"
-              />
-            </ThemeProvider>
-            <Link
-              to="/reset"
-              style={{ textDecoration: "none", color: "#dc143c" }}
-            >
-              <span>Forgot password?</span>
-            </Link>
+    <React.Fragment>
+      <div className={sign.container__two}>
+        {error && (
+          <Snackbar open={error} autoHideDuration={2000} onClose={displayError}>
+            <Alert onClose={displayError} severity="error">
+              Something went wrong
+            </Alert>
+          </Snackbar>
+        )}
+        <div className={sign.signin__cont}>
+          <div className={sign.sign__title}>
+            <span>Account Login </span>
           </div>
-          <button className={sign.custom__button__in} onClick={doSubmit}>
-            SIGN IN
-          </button>
-          <div className={sign.details}>
-            <span>Don't have an account?</span>
-            <Link
-              to="/account/signup"
-              style={{ textDecoration: "none", color: "#dc143c" }}
-            >
-              Sign Up Now
-            </Link>
+          <div className={sign.sign__in__container}>
+            <form className={sign.form}>
+              <CssTextField
+                className={sign.field}
+                autoFocus
+                label="Email Address"
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                onBlur={resetMailError}
+                value={values.email}
+                onChange={handleChange("email")}
+                helperText={emailError}
+                error={emailError != null}
+              />
+              <br />
+              <CssOutline variant="outlined" required>
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={values.showPassword ? "text" : "password"}
+                  className={sign.field}
+                  required
+                  onBlur={resetPassError}
+                  helperText={passwordError}
+                  error={passwordError != null}
+                  value={values.password}
+                  onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  labelWidth={100}
+                />
+              </CssOutline>
+            </form>
+            <div className={sign.reset}>
+              <ThemeProvider theme={theme}>
+                <CssChecked
+                  control={
+                    <GreenCheckbox
+                      checked={values.checker}
+                      onChange={handleChangeCheck}
+                      name="checker"
+                    />
+                  }
+                  label="Remember me"
+                />
+              </ThemeProvider>
+              <Link
+                to="/reset"
+                style={{ textDecoration: "none", color: "#dc143c" }}
+              >
+                <span>Forgot password?</span>
+              </Link>
+            </div>
+            <button className={sign.custom__button__in} onClick={doSubmit}>
+              SIGN IN
+            </button>
+            <div className={sign.details}>
+              <span>Don't have an account?</span>
+              <Link
+                to="/account/signup"
+                style={{ textDecoration: "none", color: "#dc143c" }}
+              >
+                Sign Up Now
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <SignIn />
+    </React.Fragment>
   );
 };
 

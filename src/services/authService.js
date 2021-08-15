@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode";
 import { LOGIN_API, REGISTER_API, USER } from "../config";
 import http from "./httpService";
 
-
 const tokenKey = "token";
 
 const remainingMilliseconds = 60 * 60 * 1000;
@@ -19,6 +18,7 @@ export function setAutoLogout(milliseconds) {
 
 export async function login(email, password) {
   const { data: jwt } = await http.post(LOGIN_API, { email, password });
+  console.log(jwt)
   localStorage.setItem(tokenKey, jwt);
   localStorage.setItem("expiry", exp);
 }

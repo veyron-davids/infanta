@@ -1,6 +1,12 @@
-.container {
-  /* margin: auto 11%; */
-  width: 100%;
-  padding-left: 13%;
-  padding-right: 9.5%;
+@media (min-width: 768px) {
+  .container {
+    width: 100%;
+    padding-left: 13%;
+    padding-right: 9.5%;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
 }

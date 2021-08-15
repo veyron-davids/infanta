@@ -2,10 +2,11 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
 import details from "../css/profile.module.css";
-import auth from "../services/authService";
+import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "./dropdown";
+import { selectUser } from "../store/auth-slice";
 
-const gender = ["Male", "Female"];
+const gender = ["---", "Male", "Female"];
 
 const CssTextField = withStyles({
   root: {
@@ -30,14 +31,13 @@ const CssTextField = withStyles({
 })(TextField);
 
 const Details = () => {
-  const [fError, setFerror] = useState();
-  const [lError, setLerror] = useState();
+  const user = useSelector(selectUser);
   const [emError, setEmerror] = useState();
   const [phError, setPherror] = useState();
 
   const [values, setValues] = useState({
-    FirstName: "",
-    LastName: "",
+    FirstName: user && user.FirstName,
+    LastName: user && user.LastName,
     email: "",
     phoneNumber: "",
     gender: "",
@@ -48,23 +48,20 @@ const Details = () => {
     setValues({ ...values, [prop]: event.target.value });
   };
 
+  const handleGender = (state) => {
+    values.gender = state;
+  };
+
   const resetMailError = () => {
     setEmerror(null);
-  };
-  const resetFError = () => {
-    setFerror(null);
-  };
-  const resetLError = () => {
-    setLerror(null);
   };
   const resetPhError = () => {
     setPherror(null);
   };
 
-  const doSubmit = async () => {
+  const doSubmit = async (e) => {
+    e.preventDefault();
     setEmerror(null);
-    setFerror(null);
-    setLerror(null);
     setPherror(null);
     try {
       if (
@@ -74,12 +71,11 @@ const Details = () => {
         values.phoneNumber.trim().length === 0
       ) {
         setEmerror("This field is required");
-        setLerror("This field is required");
-        setFerror("This field is required");
         setPherror("This field is required");
         return;
       } else {
-        const response = await auth.register(values);
+        // const response = await auth.register(values);
+        console.log(values);
       }
     } catch (err) {
       console.log(err);
@@ -88,84 +84,78 @@ const Details = () => {
 
   return (
     <div className={details.container__two}>
-      <div className={details.details__content}>
-        <form>
-          <div className={details.details__input__layer}>
-            <CssTextField
-              className={details.field}
-              
-              onBlur={resetFError}
-              label="First Name"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.FirstName}
-              onChange={handleChange("FirstName")}
-              helperText={fError}
-              error={fError != null}
-            />
-            <CssTextField
-              className={details.field}
-            
-              onBlur={resetLError}
-              label="Last Name"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.LastName}
-              onChange={handleChange("LastName")}
-              helperText={lError}
-              error={lError != null}
-            />
-          </div>
-          <div className={details.details__input__layer}>
-            <CssTextField
-              className={details.field}
-            
-              onBlur={resetMailError}
-              label="Email"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.email}
-              onChange={handleChange("email")}
-              helperText={emError}
-              error={emError != null}
-            />
-            <CssTextField
-              className={details.field}
-             
-              onBlur={resetPhError}
-              label="Phone Number"
-              variant="outlined"
-              required
-              id="custom-css-outlined-input"
-              value={values.phoneNumber}
-              onChange={handleChange("phoneNumber")}
-              helperText={phError}
-              error={phError != null}
-            />
-          </div>
-          <div className={details.details__input__layer}>
-            <Dropdown drop={gender} styling={details.field} label="Gender" />
-            <CssTextField
-              className={details.field}
-              autoFocus
-              type="date"
-              onBlur={resetPhError}
-              label="BirthDay"
-              variant="outlined"
-              id="custom-css-outlined-input"
-              value={values.dob}
-              onChange={handleChange("dob")}
-              helperText={phError}
-              error={phError != null}
-            />
-          </div>
-        </form>
-        <button className={details.custom__button__in} onClick={doSubmit}>
-          UPDATE
-        </button>
+      <div className={details.address__content}>
+        <div className={details.order__title}>
+          Edit Your Personal Information
+        </div>
+        <div className={details.address__form}>
+          <form className={details.form}>
+            <div className={details.address__input__layer}>
+              <CssTextField
+                className={details.field}
+                disabled
+                label="First Name"
+                variant="outlined"
+                id="custom-css-outlined-input"
+                value={values.FirstName}
+                onChange={handleChange("FirstName")}
+              />
+              <CssTextField
+                className={details.field}
+                label="Last Name"
+                disabled
+                variant="outlined"
+                id="custom-css-outlined-input"
+                value={values.LastName}
+                onChange={handleChange("LastName")}
+              />
+            </div>
+            <div className={details.address__input__layer}>
+              <CssTextField
+                className={details.field}
+                onBlur={resetMailError}
+                label="Email"
+                variant="outlined"
+                required
+                id="custom-css-outlined-input"
+                value={values.email}
+                onChange={handleChange("email")}
+                helperText={emError}
+                error={emError != null}
+              />
+              <CssTextField
+                className={details.field}
+                onBlur={resetPhError}
+                label="Phone Number"
+                variant="outlined"
+                id="custom-css-outlined-input"
+                value={values.phoneNumber}
+                onChange={handleChange("phoneNumber")}
+              />
+            </div>
+            <div className={details.address__input__layer}>
+              <Dropdown
+                drop={gender}
+                styling={details.field}
+                label="Gender"
+                handle={handleGender}
+              />
+              <CssTextField
+                className={details.field}
+                autoFocus
+                type="date"
+                label="BirthDay"
+                variant="outlined"
+                id="custom-css-outlined-input"
+                value={values.dob}
+                onChange={handleChange("dob")}
+              />
+            </div>
+            <button className={details.address__btn} onClick={doSubmit}>
+              UPDATE
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

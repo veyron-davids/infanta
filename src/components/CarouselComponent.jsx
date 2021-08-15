@@ -180,7 +180,7 @@ class BannerExample extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: "10px", color: "#494949" }}>
+      <div style={{ marginTop: "10px", color: "#494949" }} className="dots">
         <Carousel
           className="Example"
           autoPlay={this.state.autoPlay}

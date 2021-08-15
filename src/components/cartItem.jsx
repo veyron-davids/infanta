@@ -1,17 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Overlay from "../components/overlay";
 import citem from "../css/cartItem.module.css";
 import { isAuth } from "../store/auth-slice";
-import { selectCart, selectOpen } from "../store/cart-slice";
+import { fetchCart, selectCart, selectOpen } from "../store/cart-slice";
 import CartProd from "./cartProd";
 import Summary from "./summary";
 
 const CartItem = () => {
   const cart = useSelector(selectCart);
+  const dispatch = useDispatch();
   const currentUser = useSelector(isAuth);
   const open = useSelector(selectOpen);
 
+  useEffect(() => {
+    dispatch(fetchCart());
+  }, []);
 
   return (
     <React.Fragment>

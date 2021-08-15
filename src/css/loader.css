@@ -8,6 +8,13 @@
   z-index: 40000;
 }
 
+@media (max-width: 768px) {
+  .fp__container  {
+    display: none;
+  }
+}
+
+
 .lds-default {
   display: inline-block;
   position: relative;

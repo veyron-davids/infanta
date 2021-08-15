@@ -1,0 +1,46 @@
+.container {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: space-between;
+  height: 2.5rem;
+  background-color: #232f3e;
+  margin: 0;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  color: white;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.container__sec__one {
+  width: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container__sec__two {
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.4rem;
+  color: white;
+}
+
+#logo {
+  font-family: "Alex Brush", cursive;
+  font-size: 2rem;
+   color: white;
+}
+#burger {
+  font-size: 1.4rem;
+  color: white;
+}
+
+@media (min-width: 520px) {
+  .container {
+    display: none;
+  }
+}

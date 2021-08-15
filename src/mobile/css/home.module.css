@@ -1,0 +1,91 @@
+.container {
+  width: 100%;
+  height: auto;
+  position: relative;
+  font-size: 0.89rem;
+  color: black;
+}
+.carouse {
+  width: 100%;
+  height: 8.6rem;
+  background-color: white;
+  overflow-y: hidden;
+}
+
+.space {
+  margin-top: 0.3rem;
+  margin-left: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.img {
+  width: 100%;
+  height: 8rem;
+  background: no-repeat center center;
+}
+
+.container__picks {
+  width: 100%;
+  height: 11rem;
+  background-color: white;
+  overflow: scroll;
+}
+
+.container__picks__title {
+  height: 2rem;
+  color: black;
+  padding: 0.3rem;
+  font-weight: bold;
+  background-color: white;
+  margin-top: 0.3rem;
+}
+.container__picks__cards {
+  display: flex;
+  height: 11rem;
+  width: 80rem;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin-bottom: 0;
+  padding-left: 0.3rem;
+  background-color: white;
+}
+
+.container__card {
+  width: 8rem;
+  height: 11rem;
+  margin-right: 0.3rem;
+}
+
+.container__card__img {
+  height: 8rem;
+   background-color: #f2f3f3;
+}
+
+.container__card__img > img {
+  width: 100%;
+  height: 8rem;
+  background: no-repeat center center;
+}
+
+.container__card__details {
+  height: 2.5rem;
+  padding: 0.3rem;
+}
+
+@media (min-width: 520px) {
+  .container {
+    display: none;
+  }
+}
+
+.container__footer {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  background-color: #232f3e;
+  margin-top: 0.1rem;
+  font-size: 0.87rem;
+  justify-content: center;
+  color: white;
+}

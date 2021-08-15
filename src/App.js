@@ -13,24 +13,19 @@ import Account from "./pages/Account";
 import Cart from "./pages/Cart";
 import Help from "./pages/Help";
 import Home from "./pages/Home";
-import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import SignOut from "./pages/SignOut";
 import Wishlist from "./pages/Wishlist";
 import auth from "./services/authService";
 import { fetchUser, isAuth } from "./store/auth-slice";
-import { fetchCart, getProduct, selectOpen } from "./store/cart-slice";
-import {
-  fetchProducts,
-  selectAllProducts,
-  selectLoading,
-} from "./store/product-slice";
+import { fetchCart, getProduct } from "./store/cart-slice";
+import { selectOpenCookies } from "./store/mobile-slice";
+import { fetchProducts, selectLoading } from "./store/product-slice";
 
 function App() {
   const currentUser = useSelector(isAuth);
-  const products = useSelector(selectAllProducts);
+  const openCookies = useSelector(selectOpenCookies);
   const loading = useSelector(selectLoading);
-  const open = useSelector(selectOpen);
   const [opened, setOpened] = useState(false);
 
   const dispatch = useDispatch();
@@ -57,6 +52,7 @@ function App() {
 
   return (
     <React.Fragment>
+      {/* {openCookies && <CookiesAlert />} */}
       {loading && <Loader />}
       <Switch>
         <Route path="/account/signin" component={Account} />
@@ -68,7 +64,7 @@ function App() {
             <Nav one="Login" two="Register" three="Help" />
           )}
           {auth.getCurrentUser() && (
-            <Nav one="Profile" two="Orders" three="Help" four="four" />
+            <Nav one="Profile" three="Help" four="four" />
           )}
           {opened && auth.getCurrentUser() && <MiddleNavUser />}
           {opened && !auth.getCurrentUser() && <MiddleNavNoUser />}
@@ -103,26 +99,6 @@ function App() {
                 }}
               />
             )}
-            {/* {auth.getCurrentUser() ? (
-              <Route path="/profile" component={Profile} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/account/signin",
-                  // state: { from: props.location },
-                }}
-              />
-            )} */}
-            {auth.getCurrentUser() ? (
-              <Route path="/orders" component={Orders} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/account/signin",
-                  // state: { from: props.location },
-                }}
-              />
-            )}
             {auth.getCurrentUser() ? (
               <Route path="/wishlist" component={Wishlist} />
             ) : (
@@ -136,10 +112,15 @@ function App() {
             <Route path="/signout" component={SignOut} />
             <Route path="/help" component={Help} />
             <Route path="/profile/inbox" component={Profile} />
+            <Route exact path="/profile" component={Profile} />
             <Route path="/profile/personal-details" component={Profile} />
-            <Route path="/profile/address" component={Profile} />
+            <Route path="/profile/address/display" component={Profile} />
+            <Route path="/profile/address/new" component={Profile} />
+            <Route path="/profile/address/edit" component={Profile} />
             <Route path="/profile/password-edit" component={Profile} />
-            <Route path="/profile/newsletter-preferences" component={Profile} />
+            <Route path="/profile/orders/open" component={Profile} />
+            <Route path="/profile/orders/closed" component={Profile} />
+            <Route path="/profile/orders/details/:id" component={Profile} />
             <Route path="/home/girls-collections" component={Home} />
             <Route path="/home/boys-collections" component={Home} />
             <Route path="/home/ladies-collections" component={Home} />

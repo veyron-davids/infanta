@@ -1,8 +1,7 @@
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { createMuiTheme, withStyles } from "@material-ui/core/styles";
+import Snackbar from "@material-ui/core/Snackbar";
+import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import MuiAlert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import sign from "../css/account.module.css";
@@ -30,13 +29,15 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const SignUp = () => {
   const [fError, setFerror] = useState();
   const [lError, setLerror] = useState();
   const [pError, setPerror] = useState();
   const [emError, setEmerror] = useState();
-  const [phError, setPherror] = useState();
 
   const [values, setValues] = useState({
     FirstName: "",
@@ -45,6 +46,7 @@ const SignUp = () => {
     phoneNumber: "",
     password: "",
   });
+  const [error, setError] = useState(false);
   const history = useHistory();
 
   const handleChange = (prop) => (event) => {
@@ -63,44 +65,12 @@ const SignUp = () => {
   const resetLError = () => {
     setLerror(null);
   };
-  const resetPhError = () => {
-    setPherror(null);
-  };
 
-  const doSubmit = async () => {
-    setEmerror(null);
-    setFerror(null);
-    setLerror(null);
-    setPerror(null);
-    setPherror(null);
-    try {
-      if (
-        values.FirstName.trim().length === 0 ||
-        values.LastName.trim().length === 0 ||
-        values.email.trim().length === 0 ||
-        values.password.trim().length === 0 ||
-        values.phoneNumber.trim().length === 0
-      ) {
-        setEmerror("This field is required");
-        setPerror("This field is required");
-        setLerror("This field is required");
-        setFerror("This field is required");
-        setPherror("This field is required");
-        return;
-      } else {
-        const response = await auth.register(values);
-        // if (response.data.errors) {
-        //   validate(response);
-        //   return;
-        // }
-        auth.loginWithJwt(response.headers["x-auth-token"]);
-        localStorage.setItem("nemail", values.email);
-        localStorage.setItem("npassword", values.password);
-        history.push("/account/signin");
-      }
-    } catch (err) {
-      console.log(err);
+  const displayError = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
+    setError(false);
   };
 
   const validate = (userData) => {
@@ -113,8 +83,6 @@ const SignUp = () => {
         setFerror(err.msg);
       } else if (err.param == "LastName") {
         setLerror(err.msg);
-      } else if (err.param == "phoneNumber") {
-        setPherror(err.msg);
       } else if (err.param == "password") {
         setPerror(err.msg);
       } else {
@@ -123,8 +91,38 @@ const SignUp = () => {
     }
   };
 
+  const doSubmit = async () => {
+    try {
+      setEmerror(null);
+      setFerror(null);
+      setLerror(null);
+      setPerror(null);
+      const response = await auth.register(values);
+      console.log(response)
+      if (response.data.errors) {
+        validate(response);
+        return;
+      }
+      auth.loginWithJwt(response.headers["x-auth-token"]);
+      localStorage.setItem("nemail", values.email);
+      localStorage.setItem("npassword", values.password);
+      history.push("/account/signin");
+    } catch (err) {
+      if (err) {
+        setError(true);
+      }
+    }
+  };
+
   return (
     <div className={sign.container__two}>
+      {error && (
+        <Snackbar open={error} autoHideDuration={2000} onClose={displayError}>
+          <Alert onClose={displayError} severity="error">
+            Something went wrong
+          </Alert>
+        </Snackbar>
+      )}
       <div className={sign.signup__cont}>
         <div className={sign.sign__title}>
           <span>Create Account</span>
@@ -160,15 +158,11 @@ const SignUp = () => {
             <br />
             <CssTextField
               className={sign.field}
-              onBlur={resetPhError}
               label="Phone Number"
               variant="outlined"
-              required
               id="custom-css-outlined-input"
               value={values.phoneNumber}
               onChange={handleChange("phoneNumber")}
-              helperText={phError}
-              error={phError != null}
             />
             <br />
             <CssTextField

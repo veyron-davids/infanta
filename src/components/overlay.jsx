@@ -39,6 +39,7 @@ const Overlay = () => {
     }
     dispatch(onSuccess());
   };
+  
   const handleErrorClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

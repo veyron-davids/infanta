@@ -24,12 +24,13 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-const Dropdown = ({ drop, styling, label, handle, disabled, error }) => {
+const Dropdown = ({ drop, styling, label, handle, disabled, error, value }) => {
   return (
     <CssTextField
       variant="outlined"
       className={styling}
       select
+      defaultValue={value}
       disabled={disabled}
       label={label}
       onChange={(e) => {

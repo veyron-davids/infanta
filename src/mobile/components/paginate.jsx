@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Orders = () => {
+const Paginate = () => {
     return (
         <div>
-            Orders
+            
         </div>
     )
 }
 
-export default Orders
+export default Paginate

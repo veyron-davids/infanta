@@ -1,5 +1,5 @@
 .Banner {
-  height: 28.125rem;
+  height: 21rem;
   width: 80vw;
   position: relative;
   margin-top: 3rem;
@@ -9,24 +9,23 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+    font-size: 1rem;
 
     .MediaCaption {
       text-overflow: ellipsis;
       text-align: start;
       position: absolute;
       bottom: 0;
-
-      padding: 12px;
-
+      padding: 9px;
       background-color: black;
       color: white;
       opacity: 0.6;
 
       width: 100%;
-      height: 10%;
+      height: 9%;
 
       font: {
-        size: 25px;
+        size: 1.1rem;
         weight: 200;
       }
 
@@ -57,7 +56,7 @@
     position: relative;
 
     cursor: pointer;
-
+    display: none;
     padding: 30px;
 
     transition: 300ms;
@@ -73,13 +72,13 @@
     }
 
     .Title {
-      font-size: 40px;
+      font-size: 1.4rem;
       font-weight: 500;
     }
 
     .Caption {
       margin-top: 10px;
-      font-size: 21px;
+      font-size: 1.1rem;
     }
 
     .ViewButton {
@@ -92,5 +91,14 @@
 
       transition: 200ms;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .Banner {
+    display: none;
+  }
+  .dots {
+    display: none;
   }
 }
