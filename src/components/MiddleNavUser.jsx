@@ -13,7 +13,7 @@ const MiddleNavUser = () => {
   return (
     <div className={two.nav__sec}>
       <NavLink
-        to="/home/collections"
+        to="/"
         id={two.li}
         style={{ textDecoration: "none" }}
       >

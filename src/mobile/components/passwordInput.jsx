@@ -3,7 +3,11 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { withStyles } from "@material-ui/core/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  withStyles,
+} from "@material-ui/core/styles";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import React, { useState } from "react";
@@ -11,25 +15,35 @@ import React, { useState } from "react";
 const CssOutline = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
       // "&:hover fieldset": {
       //   borderColor: "yellow",
       // },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
     marginTop: 16,
   },
 })(FormControl);
+
+const theme = createTheme({
+  overrides: {
+    MuiSvgIcon: {
+      root: {
+        fill: "#bd281c;",
+      },
+    },
+  },
+});
 
 const PasswordInput = ({
   onBlur,
@@ -51,27 +65,29 @@ const PasswordInput = ({
   };
 
   return (
-    <CssOutline variant="outlined">
+    <CssOutline variant="outlined" helperText={helperText} >
       <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
       <OutlinedInput
         id="outlined-adornment-password"
         type={values.showPassword ? "text" : "password"}
         className={style}
         onBlur={onBlur}
-        helperText={helperText}
         error={error}
+
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         endAdornment={
           <InputAdornment position="end">
-            <IconButton
-              aria-label="toggle password visibility"
-              onClick={handleClickShowPassword}
-              onMouseDown={handleMouseDownPassword}
-              edge="end"
-            >
-              {values.showPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
+            <ThemeProvider theme={theme}>
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </ThemeProvider>
           </InputAdornment>
         }
         labelWidth={75}

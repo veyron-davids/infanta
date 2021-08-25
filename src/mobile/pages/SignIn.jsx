@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import sign from "../../mobile/css/account.module.css";
 import NoUserNav from "../components/nav/noUserNav";
 import SignInForm from "../components/signInForm";
 import TitleTab from "../components/titleTab";
+import auth from "../../services/authService";
 
 const SignIn = () => {
+  useEffect(() => {
+  auth.logout();
+  }, [])
   return (
     <div className={sign.signIn}>
       <NoUserNav />

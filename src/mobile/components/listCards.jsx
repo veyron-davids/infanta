@@ -1,8 +1,16 @@
 import React from "react";
 import list from "../../mobile/css/products.module.css";
 import Buttons from "./button";
+import { useDispatch } from "react-redux";
+import { setItemToAdd } from "../../store/cart-slice";
 
-const ListCards = () => {
+const ListCards = ({ handleOpenDrawer, product }) => {
+  const dispatch = useDispatch();
+    function currencyFormat(num) {
+      return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+
+    const price = currencyFormat(product.price);
   return (
     <div className={list.container__list}>
       <div className={list.container__list__img}>
@@ -13,10 +21,17 @@ const ListCards = () => {
       </div>
       <div className={list.container__list__details}>
         <div className={list.container__list__name}>
-          <span id={list.spanner}>Best clothes Best clothes Best clothes </span>
-          <span>N20,000</span>
+          <span id={list.spanner}>{product.pname} </span>
+          <span>{price}</span>
         </div>
-        <Buttons>ADD TO CART</Buttons>
+        <Buttons
+          onClick={() => {
+            dispatch(setItemToAdd(product._id));
+            handleOpenDrawer();
+          }}
+        >
+          ADD TO CART
+        </Buttons>
       </div>
     </div>
   );

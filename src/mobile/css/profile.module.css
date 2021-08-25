@@ -31,7 +31,7 @@
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  height: 2.5rem;
+  height: 3.5rem;
   background-color: white;
 }
 
@@ -60,7 +60,7 @@
   justify-content: center;
   padding-right: 1rem;
   height: 2.5rem;
-  color: #dd463c;
+  color: #bd281c;
   background-color: white;
   margin-top: 0.2rem;
   font-weight: bold;
@@ -94,6 +94,11 @@
   height: 2.5rem;
   margin-top: 0.2rem;
   padding-left: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 .inbox__title > span {
   font-size: 1.1rem;
@@ -136,7 +141,7 @@
 
 #mail {
   font-size: 2rem;
-  color: #dd463c;
+  color: #bd281c;
 }
 
 .message__count {
@@ -149,9 +154,9 @@
   height: 1rem;
   width: 1rem;
   border-radius: 0.5rem;
-  border: 2px solid #dd463c;
+  border: 2px solid #bd281c;
   color: white;
-  background-color: #dd463c;
+  background-color: #bd281c;
   font-size: 0.8rem;
   font-weight: bold;
 }
@@ -159,6 +164,8 @@
 .collections {
   width: 100%;
   font-size: 0.875rem;
+  margin-bottom: 1rem;
+  margin-top: 0.7rem;
 }
 
 .footer {
@@ -216,4 +223,143 @@
   font-size: 0.6rem;
   color: white;
   width: 3.3rem;
+}
+
+.wish__container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 520px) {
+  .wish__container {
+    display: none;
+  }
+}
+
+.wishcard__container {
+  display: flex;
+  flex-direction: column;
+  height: 9rem;
+  background-color: white;
+  margin: 0.3rem;
+  border-radius: 3px;
+  padding: 0.3rem;
+}
+
+.wishcard__container__leveone {
+  width: 100%;
+  display: flex;
+  height: 6rem;
+  border-bottom: 1px solid #f2f3f3;
+  padding-bottom: 0.3rem;
+}
+
+.wishcard__container__levetwo {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 3rem;
+  padding: 0.1rem;
+}
+
+.wishcard__img {
+  width: 35%;
+  background-color: #f2f3f3;
+}
+.wishcard__img > img {
+  width: 100%;
+  height: 100%;
+  background: no-repeat center center;
+}
+
+.wishcard__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 65%;
+  font-size: 0.7rem;
+  color: black;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+
+.buy {
+  height: 2.3rem;
+  background-color: #c7c7cd;
+  border: 1px solid #c7c7cd;
+  outline: none !important;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  color: white;
+  font-size: 0.7rem;
+}
+
+.out {
+  height: 2.3rem;
+  width: 4rem;
+  background-color: #bd281c;
+  border: 1px solid #bd281c;
+  outline: none !important;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  color: white;
+  font-size: 0.7rem;
+}
+
+#remove {
+  display: flex;
+  align-items: center;
+  color: #bd281c;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+#remove > span {
+  margin-left: 0.2rem;
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.detail__container {
+  width: 100%;
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 520px) {
+  .detail__container {
+    display: none;
+  }
+}
+
+.detail__container__form {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  background-color: white;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.buttons {
+  height: 3rem;
+  width: 100%;
+  background-color: #bd281c;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #bd281c;
+  margin-top: 0.8rem;
+  color: white;
+  font-size: 0.8rem;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
 }

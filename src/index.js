@@ -5,12 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { fetchUser, getAuth } from "./store/auth-slice";
+import { fetchUser} from "./store/auth-slice";
 import { fetchCart } from "./store/cart-slice";
 import store from "./store/index";
 
 store.dispatch(fetchUser());
-store.dispatch(getAuth());
 store.dispatch(fetchCart());
 console.log("idexjs");
 

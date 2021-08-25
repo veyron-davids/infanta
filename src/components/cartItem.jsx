@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Overlay from "../components/overlay";
 import citem from "../css/cartItem.module.css";
-import { isAuth } from "../store/auth-slice";
 import { fetchCart, selectCart, selectOpen } from "../store/cart-slice";
 import CartProd from "./cartProd";
 import Summary from "./summary";
+import auth from "../services/authService";
 
 const CartItem = () => {
   const cart = useSelector(selectCart);
   const dispatch = useDispatch();
-  const currentUser = useSelector(isAuth);
+  const currentUser = auth.getCurrentUser();
   const open = useSelector(selectOpen);
 
   useEffect(() => {

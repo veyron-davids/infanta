@@ -124,6 +124,8 @@ const cartSlice = createSlice({
       state.cart = action.payload;
     },
     OnAdd(state, action) {
+      state.success = false;
+      state.fail = false;
       const { spec, id } = action.payload;
       const cartProductIndex = state.cart.findIndex((cp) => {
         return cp.productId._id == id;
@@ -156,6 +158,8 @@ const cartSlice = createSlice({
     },
 
     OnRemove(state, action) {
+      state.success = false;
+      state.fail = false;
       const { spec, id } = action.payload;
       const cartProductIndex =
         state.cart.length !== 0 &&

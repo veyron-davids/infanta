@@ -8,19 +8,16 @@ import { NavLink, useLocation } from "react-router-dom";
 import nav from "../css/nav.module.css";
 import { isAuth } from "../store/auth-slice";
 import { selectCartCount } from "../store/cart-slice";
+import auth from "../services/authService";
 
 const Nav = ({ one, two, three, four }) => {
-  const currentUser = useSelector(isAuth);
+  const currentUser = auth.getCurrentUser();
   const cartTotal = useSelector(selectCartCount);
   const location = useLocation();
 
   return (
     <div className={nav.nav}>
-      <NavLink
-        to="/home/collections"
-        id={nav.li}
-        style={{ textDecoration: "none" }}
-      >
+      <NavLink to="/" id={nav.li} style={{ textDecoration: "none" }}>
         <div className={nav.logo}>
           <span>
             {/* <Logo /> */}

@@ -1,10 +1,10 @@
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import details from "../css/profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import Dropdown from "./dropdown";
 import { selectUser } from "../store/auth-slice";
+import Dropdown from "./dropdown";
 
 const gender = ["---", "Male", "Female"];
 
@@ -127,6 +127,7 @@ const Details = () => {
                 className={details.field}
                 onBlur={resetPhError}
                 label="Phone Number"
+                type="number"
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={values.phoneNumber}
@@ -144,7 +145,7 @@ const Details = () => {
                 className={details.field}
                 autoFocus
                 type="date"
-                label="BirthDay"
+                label="Birthday"
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={values.dob}

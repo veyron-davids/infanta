@@ -3,8 +3,9 @@ import MuiAlert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Route, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import add from "../css/profile.module.css";
+import ProtectedRoute from "../services/protectedRoute";
 import { selectUser } from "../store/auth-slice";
 import DisplayedAddress from "./displayedAddress";
 import EditAddress from "./editAddress";
@@ -89,9 +90,12 @@ const Address = () => {
               <span id={add.empty}>You have no registered address</span>
             )}
 
-        <Route path="/profile/address/display" component={DisplayedAddress} />
-        <Route path="/profile/address/new" component={NewAddress} />
-        <Route path="/profile/address/edit" component={EditAddress} />
+        <ProtectedRoute
+          path="/profile/address/display"
+          component={DisplayedAddress}
+        />
+        <ProtectedRoute path="/profile/address/new" component={NewAddress} />
+        <ProtectedRoute path="/profile/address/edit" component={EditAddress} />
       </div>
     </div>
   );

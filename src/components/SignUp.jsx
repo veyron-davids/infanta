@@ -10,20 +10,20 @@ import auth from "../services/authService";
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },
@@ -98,7 +98,7 @@ const SignUp = () => {
       setLerror(null);
       setPerror(null);
       const response = await auth.register(values);
-      console.log(response)
+      console.log(response);
       if (response.data.errors) {
         validate(response);
         return;
@@ -156,7 +156,7 @@ const SignUp = () => {
               error={lError != null}
             />
             <br />
-            <CssTextField
+            {/* <CssTextField
               className={sign.field}
               label="Phone Number"
               variant="outlined"
@@ -164,7 +164,7 @@ const SignUp = () => {
               value={values.phoneNumber}
               onChange={handleChange("phoneNumber")}
             />
-            <br />
+            <br /> */}
             <CssTextField
               className={sign.field}
               onBlur={resetMailError}

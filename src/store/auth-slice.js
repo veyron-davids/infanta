@@ -12,22 +12,16 @@ import http from "../services/httpService";
 
 const initialState = {
   userDetails: null,
-  authenticated: true,
   address: null,
   selectedState: "",
   selectedCity: "",
   useCurrentAddress: false,
-  loading: false,
   addressToEdit: null,
 };
 
 export const fetchUser = createAsyncThunk("auth/fetchUser", async () => {
   const response = await http.get(USER);
   return response.data;
-});
-export const getAuth = createAsyncThunk("auth/getAuth", async () => {
-  const response = await auth.getCurrentUser();
-  return response;
 });
 
 export const updateUserAddress = createAsyncThunk(
@@ -61,10 +55,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logUserOut(state, action) {
-      state.authenticated = false;
-      state.userDetails = null;
-    },
     setDefaultAdd(state, action) {
       const { data } = action.payload;
       const updatedUser = state.userDetails;
@@ -104,16 +94,6 @@ const authSlice = createSlice({
     [fetchUser.fulfilled]: (state, action) => {
       state.userDetails = action.payload;
     },
-    [fetchUser.rejected]: (state, action) => {
-      state.authenticated = false;
-    },
-    [getAuth.fulfilled]: (state, action) => {
-      state.authenticated = true;
-    },
-    [getAuth.rejected]: (state, action) => {
-      state.authenticated = false;
-      state.userDetails = null;
-    },
     [updateUserAddress.fulfilled]: (state, action) => {
       state.userDetails.address = action.payload;
     },
@@ -127,7 +107,6 @@ const authSlice = createSlice({
 });
 
 export const {
-  logUserOut,
   setAddressToUse,
   setDefaultAdd,
   setDefaultAddTwo,
@@ -138,8 +117,6 @@ export const {
 export default authSlice.reducer;
 
 export const selectUser = (state) => state.auth.userDetails;
-export const isAuth = (state) => state.auth.authenticated;
 export const Useraddress = (state) => state.auth.address;
 export const selectAddressTouse = (state) => state.auth.useCurrentAddress;
-export const selectLoading = (state) => state.auth.loading;
 export const selectAddressToEdit = (state) => state.auth.addressToEdit;

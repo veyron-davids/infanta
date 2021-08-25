@@ -35,9 +35,9 @@ const Cart = () => {
           <div>Payment</div>
         </NavLink>
       </div>
-      <Route path="/cart/summary" component={CartItem} />
-      <Route path="/cart/delivery-details" component={Delivery} />
-      <Route path="/cart/payment" component={Payment} />
+      <ProtectedRoute path="/cart/summary" component={CartItem} />
+      <ProtectedRoute path="/cart/delivery-details" component={Delivery} />
+      <ProtectedRoute path="/cart/payment" component={Payment} />
     </div>
   );
 };

@@ -14,6 +14,9 @@ const CssTextField = withStyles({
       "& fieldset": {
         borderColor: "#bd281c;",
       },
+      // "&:hover fieldset": {
+      //   borderColor: "#971a1a;",
+      // },
       "&.Mui-focused fieldset": {
         borderColor: "#bd281c;",
       },
@@ -23,39 +26,31 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-const VariantInput = ({
-  style,
-  autoFocus,
-  disabled,
-  required,
-  value,
-  handleChange,
-  label,
-  error,
-  helperText,
-  reset,
-  type,
-  max
-}) => {
+const DropdownMobile = ({ drop, styling, label, handle, disabled, error, value }) => {
   return (
     <CssTextField
-      className={style}
-      autoFocus={autoFocus}
-      label={label}
       variant="outlined"
-      type={type}
+      className={styling}
+      select
+      defaultValue={value}
       disabled={disabled}
-      required={required}
+      label={label}
+      onChange={(e) => {
+        handle(e.target.value);
+      }}
+      SelectProps={{
+        native: true,
+      }}
       id="custom-css-outlined-input"
-      value={value}
-      onChange={(e) => handleChange(e.target.value)}
-      //   onChange={(e) => handleChange(e.target.value)}
-      helperText={helperText}
       error={error}
-      onBlur={reset}
-      inputProps={max}
-    />
+    >
+      {drop.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </CssTextField>
   );
 };
 
-export default VariantInput;
+export default React.memo(DropdownMobile);

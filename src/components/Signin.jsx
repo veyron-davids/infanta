@@ -25,20 +25,20 @@ import auth from "../services/authService";
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },
@@ -46,20 +46,20 @@ const CssTextField = withStyles({
 const CssOutline = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },
@@ -77,10 +77,10 @@ const CssChecked = withStyles({
 
 const GreenCheckbox = withStyles({
   root: {
-    color: "#232f3e;",
+    color: "#bd281c;",
     fontSize: "0.875px",
     "&$checked": {
-      color: "#232f3e;",
+      color: "#bd281c;",
       fontSize: "0.875px",
     },
   },
@@ -98,11 +98,12 @@ const theme = createMuiTheme({
     MuiSvgIcon: {
       root: {
         fontSize: "1.2rem",
+        fill: "#bd281c;",
       },
     },
     PrivateSwitchBase: {
       root: {
-        padding: "4px",
+        padding: "6px",
       },
     },
   },
@@ -112,7 +113,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Signin = () => {
+const Signin = (props) => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -160,25 +161,23 @@ const Signin = () => {
   const getloginDetails = () => {
     const nEmail = localStorage.getItem("nemail");
     const nPassword = localStorage.getItem("npassword");
+    const storedEmail = localStorage.getItem("email");
+    const storedPassword = localStorage.getItem("password");
     if (nEmail && nPassword) {
       setValues({
         email: nEmail,
         password: nPassword,
       });
-    } else {
-      const storedEmail = localStorage.getItem("email");
-      const storedPassword = localStorage.getItem("password");
-      if (!storedEmail && storedPassword) {
-        return;
-      } else {
-        setValues({
-          email: storedEmail,
-          password: storedPassword,
-        });
-      }
+      // localStorage.removeItem("nemail");
+      // localStorage.removeItem("npassword");
+      return;
+    } else if (storedEmail && storedPassword) {
+      setValues({
+        email: storedEmail,
+        password: storedPassword,
+      });
+      return;
     }
-    localStorage.removeItem("nemail");
-    localStorage.removeItem("npassword");
   };
 
   useEffect(() => {
@@ -203,14 +202,17 @@ const Signin = () => {
         return;
       } else {
         const response = await auth.login(values.email, values.password);
-        history.replace("/home/collections");
-        window.location.reload();
+        console.log(response);
+        const { state } = props.location;
+        window.location = state ? state.from.pathname : "/";
+
         setLoading(false);
       }
     } catch (err) {
       // setValidationError();
       if (err) {
         setError(true);
+        setEmailError("Invalid Email or Password");
       }
     }
   };
@@ -245,39 +247,41 @@ const Signin = () => {
                 error={emailError != null}
               />
               <br />
-              <CssOutline variant="outlined" required>
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
-                  id="outlined-adornment-password"
-                  type={values.showPassword ? "text" : "password"}
-                  className={sign.field}
-                  required
-                  onBlur={resetPassError}
-                  helperText={passwordError}
-                  error={passwordError != null}
-                  value={values.password}
-                  onChange={handleChange("password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {values.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  labelWidth={100}
-                />
-              </CssOutline>
+              <ThemeProvider theme={theme}>
+                <CssOutline variant="outlined" required>
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    type={values.showPassword ? "text" : "password"}
+                    className={sign.field}
+                    required
+                    onBlur={resetPassError}
+                    helperText={passwordError}
+                    error={passwordError != null}
+                    value={values.password}
+                    onChange={handleChange("password")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    labelWidth={88}
+                  />
+                </CssOutline>
+              </ThemeProvider>
             </form>
             <div className={sign.reset}>
               <ThemeProvider theme={theme}>

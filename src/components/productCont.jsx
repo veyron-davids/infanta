@@ -12,7 +12,7 @@ const ProductCont = () => {
   const side = {
     one: {
       label: "All Collections",
-      route: "/home/collections",
+      route: "/",
     },
     two: {
       label: "Stylish Girls",
@@ -39,7 +39,7 @@ const ProductCont = () => {
       <Route path="/home/boys-collections" component={CatThree} />
       <Route path="/home/ladies-collections" component={CatFour} />
       <Route path="/home/men-collections" component={CatFive} />
-      <Route path="/home/collections" component={AllProducts} />
+      <Route exact path="/" component={AllProducts} />
       {/* <Redirect  exact to="/collections" /> */}
     </div>
   );

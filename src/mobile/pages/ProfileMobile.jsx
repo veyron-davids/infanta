@@ -41,16 +41,24 @@ const ProfileMobile = () => {
             <span>Orders</span>
             <CgArrowRight id={prof.view} />
           </NavLink>
-          <div className={prof.profile__item}>
+          <NavLink
+            to="/wishlist"
+            className={prof.profile__item}
+            style={{ textDecoration: "none" }}
+          >
             <CgHeart id={prof.icon} />
             <span>Wishlist</span>
             <CgArrowRight id={prof.view} />
-          </div>
-          <div className={prof.profile__item}>
+          </NavLink>
+          <NavLink
+            to="/profile/personal-details"
+            className={prof.profile__item}
+            style={{ textDecoration: "none" }}
+          >
             <GrUserSettings id={prof.icon} />
             <span>Details</span>
             <CgArrowRight id={prof.view} />
-          </div>
+          </NavLink>
           <div className={prof.profile__item}>
             <TiLocationOutline id={prof.icon} />
             <span>Address Book</span>

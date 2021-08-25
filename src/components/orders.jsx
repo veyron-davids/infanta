@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Route } from "react-router-dom";
 import orders from "../css/profile.module.css";
+import ProtectedRoute from "../services/protectedRoute";
 import ClosedOrders from "./closedOrders";
 import OpenOrders from "./openOrders";
 
@@ -26,8 +27,11 @@ const Orders = () => {
             <span>Closed Orders</span>
           </NavLink>
         </div>
-        <Route path="/profile/orders/open" component={OpenOrders} />
-        <Route path="/profile/orders/closed" component={ClosedOrders} />
+        <ProtectedRoute path="/profile/orders/open" component={OpenOrders} />
+        <ProtectedRoute
+          path="/profile/orders/closed"
+          component={ClosedOrders}
+        />
       </div>
     </div>
   );

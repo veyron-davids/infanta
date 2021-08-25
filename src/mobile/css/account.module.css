@@ -51,7 +51,15 @@
 }
 
 a.active {
-  border-bottom: 1px solid #232f3e;
+  border-bottom: 1px solid #bd281c;
+  color: #bd281c;
+}
+
+/* a:active {
+  background-color: #dd463c;
+} */
+a {
+  color: black;
 }
 
 .sign__form {
@@ -80,10 +88,10 @@ a.active {
 .buttons {
   height: 3rem;
   width: 100%;
-  background-color: #232f3e;
+  background-color: #bd281c;
   outline: none;
   border-radius: 3px;
-  outline-color: #232f3e;
+  border: 1px solid #bd281c;
   margin-top: 0.8rem;
   color: white;
   font-size: 0.8rem;

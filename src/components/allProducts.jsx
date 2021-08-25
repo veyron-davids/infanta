@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import "../css/pagination.css";
 import prod from "../css/productCont.module.css";
-import { fetchProducts, selectAllProducts } from "../store/product-slice";
+import { selectAllProducts } from "../store/product-slice";
 import Card from "./card";
 
 const AllProducts = () => {
@@ -22,7 +22,6 @@ const AllProducts = () => {
 
   useEffect(() => {
     window.scrollTo({ behavior: "smooth", top: "0px" });
-    dispatch(fetchProducts());
   }, [dispatch, pageNumber]);
 
   return (

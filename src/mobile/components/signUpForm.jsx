@@ -107,7 +107,7 @@ const SignUpForm = () => {
       <VariantInput
         label="First Name"
         autoFocus
-        onBlur={resetFError}
+        reset={resetFError}
         // value={values.FirstName}
         handleChange={handleFirst}
         helperText={fError}
@@ -115,14 +115,14 @@ const SignUpForm = () => {
       />
       <VariantInput
         label="Last Name"
-        onBlur={resetLError}
+        reset={resetLError}
         // value={values.LastName}
         handleChange={handleLast}
         helperText={lError}
         error={lError != null}
       />
       <VariantInput
-        onBlur={resetMailError}
+        reset={resetMailError}
         label="Email Address"
         // value={values.email}
         handleChange={handleEmail}

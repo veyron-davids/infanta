@@ -7,7 +7,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import citem from "../css/cartItem.module.css";
 import {
   selectAddressTouse,
-  selectLoading,
   selectUser,
   setAddressToUse,
 } from "../store/auth-slice";
@@ -29,7 +28,6 @@ const Summary = ({ title, open, handleSubmit }) => {
   const cart = useSelector(selectCart);
   const user = useSelector(selectUser);
   const useAdd = useSelector(selectAddressTouse);
-  const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
   const route = useLocation();
   const totalQty = useSelector(selectCartCount);
@@ -164,7 +162,7 @@ const Summary = ({ title, open, handleSubmit }) => {
           )}
           {!useAdd && route.pathname === "/cart/delivery-details" && (
             <button className={citem.button} onClick={handleSubmit}>
-              {loading ? <div className={citem.ring}></div> : "UPDATE"}
+              {"UPDATE"}
             </button>
           )}
         </div>

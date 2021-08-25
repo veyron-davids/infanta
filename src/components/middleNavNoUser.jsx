@@ -10,7 +10,7 @@ const MiddleNavNoUser = () => {
   return (
     <div className={one.nav__sec}>
       <NavLink
-        to="/home/collections"
+        to="/"
         id={one.li}
         style={{ textDecoration: "none" }}
       >

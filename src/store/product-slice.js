@@ -5,6 +5,7 @@ import http from "../services/httpService";
 const initialState = {
   products: [],
   grid: true,
+  loading:false,
 };
 //PRODUCTS//
 

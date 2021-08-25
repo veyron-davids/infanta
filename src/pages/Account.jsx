@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Particles from "react-particles-js";
 import { NavLink, Route } from "react-router-dom";
 import Signin from "../components/Signin";
@@ -7,13 +7,17 @@ import account from "../css/account.module.css";
 import SignIn from "../mobile/pages/SignIn";
 import Signup from "../mobile/pages/Signup";
 import particlesOptions from "../particlesjs-config";
+import auth from "../services/authService";
 
 const Account = () => {
+  useEffect(() => {
+    auth.logout();
+  }, []);
   return (
     <React.Fragment>
       <div className={account.container}>
         <div className={account.container__one}>
-          <NavLink to="/home/collections" style={{ textDecoration: "none" }}>
+          <NavLink to="/" style={{ textDecoration: "none" }}>
             <div className={account.logo}>
               <span id={account.span}>Infanta</span>
               <div id={account.caption}>...quality & price at it's best</div>

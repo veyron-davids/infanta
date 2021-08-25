@@ -78,7 +78,7 @@
   align-items: center;
   flex-flow: column;
   width: 90%;
-  height: 98vh;
+  height: 90vh;
   background-color: white;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   /* padding: 20px 0; */
@@ -94,6 +94,7 @@
   align-self: center;
   font-size: 2rem;
   font-weight: bold;
+  color: #bd281c;
 }
 
 .button {
@@ -126,11 +127,11 @@
   padding: 0 35px 0 35px;
   font-size: 15px;
   font-weight: bold;
-  background-color: #232f3e;
+  background-color: #bd281c;
   color: white;
   border: none;
   border-radius: 5px;
-  outline: 1px dotted #232f3e;
+  outline: 1px dotted #bd281c;
   cursor: pointer;
   display: flex;
   justify-content: center;

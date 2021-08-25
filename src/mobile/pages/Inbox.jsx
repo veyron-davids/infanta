@@ -3,8 +3,8 @@ import { FiMail } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { selectAllProducts } from "../../store/product-slice";
 import Footer from "../components/footer";
-import PreCard from "../components/preCard";
 import ProfileTitle from "../components/profileTitle";
+import PreCard from "../components/preCard";
 import Random from "../components/random";
 import inbox from "../css/profile.module.css";
 

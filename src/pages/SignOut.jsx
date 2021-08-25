@@ -1,15 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import auth from "../services/authService";
-import { logUserOut } from "../store/auth-slice";
 
 const SignOut = () => {
-  const dispatch = useDispatch();
-  const logout = () => {
-    // dispatch(logUserOut());
+  useEffect(() => {
     auth.logout();
-    window.location = "/home/collections";
-  };
-  logout();
+    window.location = "/";
+  }, []);
+
+  return null;
 };
 
 export default SignOut;

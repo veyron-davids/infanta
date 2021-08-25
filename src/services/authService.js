@@ -18,7 +18,6 @@ export function setAutoLogout(milliseconds) {
 
 export async function login(email, password) {
   const { data: jwt } = await http.post(LOGIN_API, { email, password });
-  console.log(jwt)
   localStorage.setItem(tokenKey, jwt);
   localStorage.setItem("expiry", exp);
 }

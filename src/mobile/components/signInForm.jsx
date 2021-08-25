@@ -1,7 +1,7 @@
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
   withStyles,
 } from "@material-ui/core/styles";
@@ -28,10 +28,10 @@ const CssChecked = withStyles({
 
 const GreenCheckbox = withStyles({
   root: {
-    color: "#232f3e;",
+    color: "#bd281c;",
     fontSize: "0.875rem",
     "&$checked": {
-      color: "#232f3e;",
+      color: "#bd281c;",
       fontSize: "0.875rem",
     },
     marginLeft: 10,
@@ -39,7 +39,7 @@ const GreenCheckbox = withStyles({
   checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-const theme = createMuiTheme({
+const theme = createTheme({
   overrides: {
     // Style sheet name ⚛️
     MuiTypography: {
@@ -50,6 +50,7 @@ const theme = createMuiTheme({
     MuiSvgIcon: {
       root: {
         fontSize: "1.2rem",
+        fill: "#bd281c;",
       },
     },
     PrivateSwitchBase: {
@@ -60,10 +61,10 @@ const theme = createMuiTheme({
   },
 });
 
-const SignInForm = ({ checked, onChange }) => {
+const SignInForm = () => {
   const [values, setValues] = useState({
-    email: "",
-    password: "",
+    Memail: "",
+    Mpassword: "",
     showPassword: false,
     checker: false,
   });
@@ -100,33 +101,31 @@ const SignInForm = ({ checked, onChange }) => {
   const getloginDetails = () => {
     const nEmail = localStorage.getItem("nemail");
     const nPassword = localStorage.getItem("npassword");
+    const storedEmail = localStorage.getItem("email");
+    const storedPassword = localStorage.getItem("password");
     if (nEmail && nPassword) {
       setValues({
-        email: nEmail,
-        password: nPassword,
+        Memail: nEmail,
+        Mpassword: nPassword,
       });
-    } else {
-      const storedEmail = localStorage.getItem("email");
-      const storedPassword = localStorage.getItem("password");
-      if (!storedEmail && storedPassword) {
-        return;
-      } else {
-        setValues({
-          email: storedEmail,
-          password: storedPassword,
-        });
-      }
+      // localStorage.removeItem("nemail");
+      // localStorage.removeItem("npassword");
+      return;
+    } else if (storedEmail && storedPassword) {
+      setValues({
+        Memail: storedEmail,
+        Mpassword: storedPassword,
+      });
+      return;
     }
-    localStorage.removeItem("nemail");
-    localStorage.removeItem("npassword");
   };
 
   const handlePassChange = (state) => {
-    values.password = state;
+    setValues({ Mpassword: state });
   };
 
   const handleEmailChange = (state) => {
-    values.email = state;
+    setValues({ Memail: state });
   };
 
   useEffect(() => {
@@ -136,29 +135,28 @@ const SignInForm = ({ checked, onChange }) => {
   const doSubmit = async (event) => {
     event.preventDefault();
     if (values.checker === true) {
-      localStorage.setItem("email", values.email);
-      localStorage.setItem("password", values.password);
+      localStorage.setItem("email", values.Memail);
+      localStorage.setItem("password", values.Mpassword);
     }
     setLoading(true);
     setEmailError(null);
     setPasswordError(null);
     try {
       if (
-        values.email.trim().length === 0 ||
-        values.password.trim().length === 0
+        values.Memail.trim().length === 0 ||
+        values.Mpassword.trim().length === 0
       ) {
         setEmailError("This field is required");
         setPasswordError("This field is required");
         return;
       } else {
         console.log(values);
-        const response = await auth.login(values.email, values.password);
-        history.replace("/home/collections");
-        window.location.reload();
+        const response = await auth.login(values.Memail, values.Mpassword);
+        window.location = "/";
+        history.replace("/");
         setLoading(false);
       }
     } catch (err) {
-      // setValidationError();
       if (err) {
         setError(true);
         setEmailError("Invalid email or password");
@@ -172,18 +170,18 @@ const SignInForm = ({ checked, onChange }) => {
       <VariantInput
         autoFocus
         label="Email Address"
-        onBlur={resetMailError}
-         value={values.email}
+        reset={resetMailError}
+        value={values.Memail}
         handleChange={handleEmailChange}
         helperText={emailError}
         error={emailError != null}
       />
       <PasswordInput
         handleChange={handlePassChange}
-        onBlur={resetPassError}
+        reset={resetPassError}
         helperText={passwordError}
         error={passwordError != null}
-        value={values.password}
+        value={values.Mpassword}
       />
       <div className={sign.reset}>
         <ThemeProvider theme={theme}>

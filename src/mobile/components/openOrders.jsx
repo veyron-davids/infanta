@@ -8,6 +8,10 @@ const OpenOrders = () => {
   return (
     <React.Fragment>
       <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
+      <OrderCard />
     </React.Fragment>
   );
 };

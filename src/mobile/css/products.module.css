@@ -49,17 +49,18 @@
   display: flex;
   flex-direction: column;
   height: 2.5rem;
+  text-transform: capitalize;
 }
 
 .container__card__button {
   position: relative;
   height: 1.8rem;
   width: 100%;
-  background-color: #dd463c;
-  border: 1px solid #dd463c;
+  background-color: #bd281c;
+  border: 1px solid #bd281c;
   outline: none !important;
   border-radius: 3px;
-  outline-color: #dd463c;
+  outline-color: #bd281c;
   color: white;
   font-size: 0.6rem;
   box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);

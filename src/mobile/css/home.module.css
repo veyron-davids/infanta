@@ -29,6 +29,11 @@
   height: 11rem;
   background-color: white;
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.container__picks::-webkit-scrollbar {
+  display: none;
 }
 
 .container__picks__title {
@@ -59,7 +64,7 @@
 
 .container__card__img {
   height: 8rem;
-   background-color: #f2f3f3;
+  background-color: #f2f3f3;
 }
 
 .container__card__img > img {
