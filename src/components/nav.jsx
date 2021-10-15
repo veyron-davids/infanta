@@ -75,7 +75,7 @@ const Nav = ({ one, two, three, four }) => {
             to="/cart/summary"
             id={nav.li__list}
             activeClassName={`${
-              location.pathname == "/cart/summary" && nav.active
+              location.pathname == "/cart/" && nav.active
             } ${nav.active}`}
             style={{ textDecoration: "none" }}
           >

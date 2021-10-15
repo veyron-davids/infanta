@@ -11,6 +11,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { ReactComponent as Spinner } from "../../assests/spinner.svg";
 import sign from "../../mobile/css/account.module.css";
 import auth from "../../services/authService";
+import { fetchUser } from "../../store/auth-slice";
 import PasswordInput from "../components/passwordInput";
 import Buttons from "./button";
 import VariantInput from "./variantInput";
@@ -153,7 +154,6 @@ const SignInForm = () => {
         console.log(values);
         const response = await auth.login(values.Memail, values.Mpassword);
         window.location = "/";
-        history.replace("/");
         setLoading(false);
       }
     } catch (err) {
@@ -203,7 +203,7 @@ const SignInForm = () => {
           <span>Forgot password?</span>
         </NavLink>
       </div>
-      <Buttons style={sign.buttons} onClick={doSubmit} disabled={loading}>
+      <Buttons style={sign.buttons} onClick={doSubmit} disabled={loading} id={loading && sign.opaque}>
         {loading ? <Spinner /> : "LOGIN"}
       </Buttons>
     </form>

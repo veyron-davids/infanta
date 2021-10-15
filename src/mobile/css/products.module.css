@@ -31,19 +31,30 @@
 
 .container__card__img {
   height: 13rem;
-  background-color: white;
 }
+
+#img {
+  height: 13rem;
+  width: 100%;
+  background: no-repeat center center;
+}
+#img__list {
+  height: 10.4rem;
+  width: 100%;
+  background: no-repeat center center;
+}
+
 .container__card__details {
   height: 5rem;
   background-color: white;
   padding: 0.3rem;
 }
 
-.container__card__img > img {
+/* .container__card__img > img {
   height: 100%;
   width: 100%;
   background: no-repeat center center;
-}
+} */
 
 .container__card__name {
   display: flex;
@@ -59,8 +70,8 @@
   background-color: #bd281c;
   border: 1px solid #bd281c;
   outline: none !important;
-  border-radius: 3px;
   outline-color: #bd281c;
+  border-radius: 3px;
   color: white;
   font-size: 0.6rem;
   box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
@@ -152,6 +163,8 @@
   padding: 0.3rem;
 }
 .container__list__img {
+  height: 11rem;
+  width: 50%;
   flex: 1;
   margin-right: 0.3rem;
 }
@@ -160,7 +173,6 @@
   width: 100%;
   background: no-repeat center center;
 }
-
 .container__list__details {
   display: flex;
   flex-direction: column;

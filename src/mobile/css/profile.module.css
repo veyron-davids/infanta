@@ -108,9 +108,8 @@
 
 #burger {
   font-size: 1.4rem;
-  text-align: center;
   color: black;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .inbox__message__box {
@@ -249,6 +248,12 @@
   padding: 0.3rem;
 }
 
+@media (min-width: 520px) {
+  .wishcard__container {
+    display: none;
+  }
+}
+
 .wishcard__container__leveone {
   width: 100%;
   display: flex;
@@ -277,6 +282,11 @@
   background: no-repeat center center;
 }
 
+#opaque {
+  opacity: 0.5;
+}
+
+
 .wishcard__details {
   display: flex;
   flex-direction: column;
@@ -286,6 +296,37 @@
   color: black;
   padding-left: 0.3rem;
   padding-right: 0.3rem;
+  text-transform: capitalize;
+}
+.size__details {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hearted {
+  width: 35%;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#color {
+  color: #bd281c;
+}
+#size {
+  margin-right: 0.4rem;
+}
+
+#heart {
+  display: flex;
+  align-items: center;
+  color: #bd281c;
+  font-size: 1.5rem;
+  text-align: center;
+  border-right: 1px solid #f2f3f3;
+  padding-right: 0.7rem;
 }
 
 .buy {
@@ -328,7 +369,7 @@
 
 .detail__container {
   width: 100%;
- 
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -361,5 +402,173 @@
   margin-top: 0.8rem;
   color: white;
   font-size: 0.8rem;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.address__container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 520px) {
+  .address__container {
+    display: none;
+  }
+}
+
+.address__display {
+  display: flex;
+  flex-direction: column;
+  height: 11rem;
+  background-color: white;
+  margin-top: 0.3rem;
+}
+.address__display__two {
+  height: 11rem;
+  margin: 0.3rem;
+  background-color: white;
+}
+
+.noadd {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.address__One {
+  height: 8rem;
+  display: flex;
+  flex-direction: column;
+  /* background-color: red; */
+  padding: 1rem;
+}
+.address__One > span {
+  text-transform: capitalize;
+}
+
+.address__One > span:nth-child(1) {
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+}
+.address__One > span:nth-child(3) {
+  margin-bottom: 0.9rem;
+}
+.address__One > span:nth-child(4) {
+  margin-bottom: 0.4rem;
+}
+.address__One > span:nth-child(5) {
+  color: #6dbd28;
+  /* font-weight: bold; */
+}
+.address__two {
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f2f3f3;
+  padding: 0 1rem;
+}
+
+.edit {
+  color: #bd281c;
+}
+.edit > span {
+  font-size: 1.5rem;
+}
+
+#edit__span {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  color: #bd281c;
+}
+
+.floating {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.8rem;
+  height: 6rem;
+}
+
+.floating__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  height: 3.5rem;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+  width: 3.5rem;
+  border-radius: 1.5em;
+  background-color: #bd281c;
+  color: white;
+  -webkit-animation: slide-in-bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: slide-in-bottom 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@-webkit-keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-bottom {
+  0% {
+    -webkit-transform: translateY(1000px);
+    transform: translateY(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.make__default {
+  color: #bd281c;
+  font-weight: bold;
+}
+
+.default__add {
+  color: #c7c7cd;
+}
+
+.address__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.2rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: white;
+}
+
+.field {
+  /* margin-top: 1rem; */
+}
+
+.but {
+  height: 3rem;
+  width: 100%;
+  background-color: #bd281c;
+  border: 1px solid #bd281c;
+  outline: none !important;
+  border-radius: 3px;
+  outline-color: #bd281c;
+  color: white;
+  font-size: 0.9rem;
   box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
 }

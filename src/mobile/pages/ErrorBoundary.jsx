@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class ErrorBoundary extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = { hasError: false };
   }
 
@@ -12,6 +12,7 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     console.log(error, errorInfo);
+    //implement logging to sentry for error reporting
   }
 
   render() {

@@ -24,9 +24,12 @@ const CartItem = () => {
         <div className={citem.container__one}>
           <div className={citem.container__title}>
             <li>Product Details</li>
-            <li id={citem.push}>Quantity</li>
-            <li id={citem.pad}>Price</li>
-            <li>Total</li>
+            <li>Quantity</li>
+            <li>Price</li>
+            <div className={citem.pad}>
+              <li>Total</li>
+              <li>Manage</li>
+            </div>
           </div>
           {cart.length === 0 ? (
             <span id={citem.empty}>Your cart is empty</span>

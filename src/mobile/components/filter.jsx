@@ -23,7 +23,7 @@ const Filter = () => {
           }}
         >
           <BsGridFill />
-          <span id={filter.switch}>SWITCH GRID VIEW</span>
+          <span id={filter.switch}>SWITCH LIST VIEW</span>
         </div>
       )}
       {!grid && (
@@ -34,7 +34,7 @@ const Filter = () => {
           }}
         >
           <BsGrid1X2Fill id={filter.list} />
-          <span id={filter.switch}>SWITCH LIST VIEW</span>
+          <span id={filter.switch}>SWITCH GRID VIEW</span>
         </div>
       )}
       <div className={filter.container__filter__inner__two} onClick={scroll}>

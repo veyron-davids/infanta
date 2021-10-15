@@ -6,10 +6,12 @@ import ProductCont from "../components/productCont";
 import HomeMobile from "../mobile/pages/HomeMobile";
 import auth from "../services/authService";
 import { selectOpen } from "../store/cart-slice";
+import {  selectLoading } from "../store/product-slice";
 
 const Home = () => {
   const currentUser = auth.getCurrentUser();
   const open = useSelector(selectOpen);
+    const loading = useSelector(selectLoading);
 
   return (
     <React.Fragment>
@@ -18,7 +20,7 @@ const Home = () => {
         <CarouselComponent />
         <ProductCont />
       </div>
-      <HomeMobile />
+      {!loading && <HomeMobile />}
     </React.Fragment>
   );
 };

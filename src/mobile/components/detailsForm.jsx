@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { ReactComponent as Spinner } from "../../assests/spinner.svg";
 import DropdownMobile from "../../mobile/components/dropDown";
 import { selectUser } from "../../store/auth-slice";
 import detail from "../css/profile.module.css";
-import VariantInput from "./variantInput";
-import { ReactComponent as Spinner } from "../../assests/spinner.svg";
 import Buttons from "./button";
+import VariantInput from "./variantInput";
 
 const gender = ["---", "Male", "Female"];
 
 const DetailsForm = () => {
   const user = useSelector(selectUser);
   const [emError, setEmerror] = useState();
-    const [phError, setPherror] = useState();
-      const [loading, setLoading] = useState(false);
+  const [phError, setPherror] = useState();
+  const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
     FirstName: user && user.FirstName,
@@ -24,12 +24,19 @@ const DetailsForm = () => {
     dob: "",
   });
 
-  const handleChange = (prop) => (state) => {
-    setValues({ ...values, [prop]: state });
+  const handleEmail = (state) => {
+    values.email = state;
+  };
+  const handlePhone = (state) => {
+    values.phoneNumber = state;
   };
 
   const handleGender = (state) => {
     values.gender = state;
+  };
+
+  const handleDOB = (state) => {
+    values.dob = state;
   };
 
   const resetMailError = () => {
@@ -40,8 +47,7 @@ const DetailsForm = () => {
   };
 
   const doSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
+    e.preventDefault();
     setEmerror(null);
     setPherror(null);
     try {
@@ -52,12 +58,13 @@ const DetailsForm = () => {
         setEmerror("This field is required");
         setPherror("This field is required");
         return;
-      } else if (values.phoneNumber.trim() !== Number) {
-          setPherror("Enter a valid phone number");
+      } else if (values.phoneNumber.trim().length < 11) {
+        setPherror("Enter a valid phone number");
+        return;
       } else {
-        
-          console.log(values);
-          setLoading(false);
+        setLoading(true);
+        console.log(values);
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -66,37 +73,30 @@ const DetailsForm = () => {
 
   return (
     <form className={detail.detail__container__form}>
+      <VariantInput disabled label="First Name" value={values.FirstName} />
+      <VariantInput disabled label="Last Name" value={values.LastName} />
       <VariantInput
-        disabled
-        label="First Name"
-        value={values.FirstName}
-        handleChange={handleChange("FirstName")}
-      />
-      <VariantInput
-        disabled
-        label="Last Name"
-        value={values.LastName}
-        handleChange={handleChange("LastName")}
-      />
-      <VariantInput
-        onBlur={resetMailError}
+        reset={resetMailError}
         label="Email"
-        handleChange={handleChange("email")}
+        handleChange={handleEmail}
         helperText={emError}
         error={emError != null}
       />
       <VariantInput
-        onBlur={resetPhError}
+        reset={resetPhError}
+        type="number"
         label="Phone Number"
         max={{ maxLength: 11 }}
-        handleChange={handleChange("phoneNumber")}
+        handleChange={handlePhone}
+        helperText={phError}
+        error={phError != null}
       />
       <DropdownMobile drop={gender} label="Gender" handle={handleGender} />
       <VariantInput
         label="Bithday"
         autoFocus
         type="date"
-        handleChange={handleChange("dob")}
+        handleChange={handleDOB}
       />
       <Buttons style={detail.buttons} onClick={doSubmit} disabled={loading}>
         {loading ? <Spinner /> : "SUBMIT"}

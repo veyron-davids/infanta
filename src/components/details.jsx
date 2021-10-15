@@ -11,20 +11,20 @@ const gender = ["---", "Male", "Female"];
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },

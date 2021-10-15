@@ -12,6 +12,7 @@ import Layout from "./layout/Layout";
 import ErrorBoundary from "./mobile/pages/ErrorBoundary";
 import Account from "./pages/Account";
 import Cart from "./pages/Cart";
+import Placeholder from "./mobile/components/skeletons/placeholder"
 import Help from "./pages/Help";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
@@ -23,6 +24,7 @@ import { fetchUser } from "./store/auth-slice";
 import { fetchCart, getProduct } from "./store/cart-slice";
 import { selectOpenCookies } from "./store/mobile-slice";
 import { fetchProducts, selectLoading } from "./store/product-slice";
+import Footer from "./components/footer";
 
 function App() {
   const currentUser = auth.getCurrentUser();
@@ -56,7 +58,7 @@ function App() {
     <React.Fragment>
       {/* {openCookies && <CookiesAlert />} */}
       {loading && <Loader />}
-      {/* {loading && <Placeholder />} */}
+      {loading && <Placeholder />}
       <ErrorBoundary>
         <Switch>
           <Route path="/account/signin" component={Account} />
@@ -74,7 +76,7 @@ function App() {
               <ProtectedRoute path="/cart/payment" component={Cart} />
               <ProtectedRoute path="/wishlist" component={Wishlist} />
               <Route path="/signout" component={SignOut} />
-              <ProtectedRoute path="/help" component={Help} />
+              <Route path="/help" component={Help} />
               <ProtectedRoute path="/profile/inbox" component={Profile} />
               <ProtectedRoute exact path="/profile" component={Profile} />
               <ProtectedRoute
@@ -111,9 +113,11 @@ function App() {
             </Layout>
           </div>
         </Switch>
+        <Footer/>
       </ErrorBoundary>
     </React.Fragment>
   );
 }
 
 export default App;
+

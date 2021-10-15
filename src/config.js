@@ -14,6 +14,7 @@ export const UPLOAD_IMAGE = "http://localhost:80/api/products/uploadImage";
 export const SERVER = "http://localhost:80/api";
 export const SERVER_IMAGE = "http://localhost:80";
 export const CREATE_ADDRESS = "http://localhost:80/api/users/create-address";
+export const DELETE_ADDRESS = "http://localhost:80/api/users/delete-address";
 export const EDIT_ADDRESS = "http://localhost:80/api/users/edit-address";
 export const FETCH_VOGUE = "http://localhost:80/api/products/vogue";
 export const SET_DEFAULT = "http://localhost:80/api/users/setDefault";

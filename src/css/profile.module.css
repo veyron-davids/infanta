@@ -219,12 +219,15 @@ a.active {
   height: 4rem;
   font-size: 15px;
   font-weight: bold;
-  background-color: #232f3e;
+  background-color: #bd281c;
   color: white;
   border: none;
   border-radius: 5px;
   outline: 1px solid white;
   cursor: pointer;
+}
+.address__btn:hover {
+  background-color: #da493e;
 }
 
 #center {

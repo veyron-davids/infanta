@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { list } from "../assests/states";
 import {
+  ADD_ORDERS,
   CREATE_ADDRESS,
+  DELETE_ADDRESS,
   EDIT_ADDRESS,
   SET_DEFAULT,
   USER,
-  ADD_ORDERS,
 } from "../config";
-import auth from "../services/authService";
 import http from "../services/httpService";
 
 const initialState = {
@@ -46,6 +45,15 @@ export const CreateUserAddress = createAsyncThunk(
     return response.data.response;
   }
 );
+
+export const RemoveAddress = createAsyncThunk(
+  "auth/RemoveAddress",
+  async (data) => {
+    const response = await http.post(DELETE_ADDRESS, data);
+    return response.data.response;
+  }
+);
+
 export const AddOrders = createAsyncThunk("auth/AddOrders", async (data) => {
   const response = await http.post(ADD_ORDERS, data);
   return response.data;
@@ -78,6 +86,9 @@ const authSlice = createSlice({
       const { data } = action.payload;
       const updatedUser = state.userDetails;
       updatedUser.address.unshift(data);
+      // if (updatedUser.address.length === 1) {
+      //   updatedUser[0].default = true;
+      // }
       state.userDetails = updatedUser;
     },
     getAddressToEdit(state, action) {
@@ -87,6 +98,13 @@ const authSlice = createSlice({
           state.addressToEdit = item;
         }
       });
+    },
+    removeAddress(state, action) {
+      const { id } = action.payload;
+      const addressIndex = state.userDetails.address.findIndex((cp) => {
+        return cp._id.toString() == id.toString();
+      });
+      state.userDetails.address.splice(addressIndex, 1);
     },
   },
 
@@ -112,6 +130,7 @@ export const {
   setDefaultAddTwo,
   setNewAddress,
   getAddressToEdit,
+  removeAddress,
 } = authSlice.actions;
 
 export default authSlice.reducer;

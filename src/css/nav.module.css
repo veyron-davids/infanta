@@ -5,6 +5,8 @@
   align-items: center;
   position: relative;
   padding-right: 9%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .nav__sec {
@@ -80,7 +82,7 @@
 }
 
 a.active {
-  border-bottom: 1px solid #232f3e;
+  border-bottom: 1px solid #bd281c;
 }
 
 /* #spanner:hover {

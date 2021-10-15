@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { MdClose, MdErrorOutline } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   addToCart,
+  handleClick,
   OnAdd,
   onError,
   OnRemove,
@@ -19,8 +20,9 @@ import {
 import over from "../css/bottomDrawer.module.css";
 import Buttons from "./button";
 import DrawerItem from "./drawerItem";
+import SnackError from "./snackError";
 
-const BottomDrawer = ({ handleOpenDrawer }) => {
+const BottomDrawer = () => {
   const item = useSelector(selectItemToAdd);
   const product = useSelector(selectProduct);
   const loading = useSelector(selectLoading);
@@ -28,6 +30,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
   const error = useSelector(selectFail);
   const dispatch = useDispatch();
   const history = useHistory();
+  const route = useLocation();
 
   function currencyFormat(num) {
     return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -50,12 +53,11 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
 
   return (
     <div className={over.container}>
-      <div className={over.container__one} onClick={handleOpenDrawer}>
-        {error && (
-          <div className={over.snack}>
-            <MdErrorOutline /> <span>Something went wrong! </span>
-          </div>
-        )}
+      <div
+        className={over.container__one}
+        onClick={() => dispatch(handleClick())}
+      >
+        {error && <SnackError msg="Something went wrong!" />}
         {success && (
           <div className={over.snack__success}>
             <IoMdCheckmarkCircleOutline /> <span>Processed successfully! </span>
@@ -65,7 +67,10 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
       <div className={over.container__two}>
         <div className={over.title}>
           <span>Please select a variation</span>
-          <MdClose onClick={handleOpenDrawer} className={over.overlay__close} />
+          <MdClose
+            onClick={() => dispatch(handleClick())}
+            className={over.overlay__close}
+          />
         </div>
         <div className={over.container__sizes}>
           <DrawerItem
@@ -83,7 +88,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnAdd({ spec: "small", id: item }));
-                }
+                } 
               });
             }}
             dispatchMinus={() => {
@@ -98,7 +103,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnRemove({ spec: "small", id: item }));
-                }
+                } 
               });
             }}
           />
@@ -117,7 +122,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnAdd({ spec: "medium", id: item }));
-                }
+                } 
               });
             }}
             dispatchMinus={() => {
@@ -132,7 +137,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnRemove({ spec: "medium", id: item }));
-                }
+                } 
               });
             }}
           />
@@ -151,7 +156,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnAdd({ spec: "large", id: item }));
-                }
+                } 
               });
             }}
             dispatchMinus={() => {
@@ -166,7 +171,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnRemove({ spec: "large", id: item }));
-                }
+                } 
               });
             }}
           />
@@ -185,7 +190,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnAdd({ spec: "xlarge", id: item }));
-                }
+                } 
               });
             }}
             dispatchMinus={() => {
@@ -200,7 +205,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnRemove({ spec: "xlarge", id: item }));
-                }
+                } 
               });
             }}
           />
@@ -219,7 +224,7 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnAdd({ spec: "xxlarge", id: item }));
-                }
+                } 
               });
             }}
             dispatchMinus={() => {
@@ -231,15 +236,17 @@ const BottomDrawer = ({ handleOpenDrawer }) => {
               ).then((data) => {
                 if (data.payload) {
                   dispatch(OnRemove({ spec: "xxlarge", id: item }));
-                }
+                } 
               });
             }}
           />
         </div>
         <div className={over.buttons}>
-          <Buttons id={over.space} style={over.but}>
-            VIEW CART AND CHECKOUT
-          </Buttons>
+          {route.pathname === "/" && (
+            <Buttons id={over.space} style={over.but}>
+              VIEW CART AND CHECKOUT
+            </Buttons>
+          )}
           <Buttons
             id={over.space__two}
             style={over.but}

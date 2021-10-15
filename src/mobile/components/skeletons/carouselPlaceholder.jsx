@@ -4,10 +4,10 @@ import "../../css/skeleton.css";
 
 const CarouselPlaceholder = () => {
   return (
-    <div className="carouse">
-      <Skeleton duration={2} className="inner" />;
+    <div className="carouse__cont">
+      <Skeleton duration={2} className="carou"/>
     </div>
-  ); 
+  );
 };
 
 export default CarouselPlaceholder;

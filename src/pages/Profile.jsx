@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Route } from "react-router-dom";
 import HorizontalScroll from "react-scroll-horizontal";
 import Address from "../components/address";
 import CardTwo from "../components/cardTwo";
@@ -11,12 +10,16 @@ import Orders from "../components/orders";
 import Password from "../components/password";
 import Side from "../components/side";
 import profile from "../css/profile.module.css";
+import EditAddress from "../mobile/pages/EditAddress";
+import AddressMobile from "../mobile/pages/AddressMobile";
 import DetailsMobile from "../mobile/pages/Details";
 import InboxMobile from "../mobile/pages/Inbox";
+import NewMobileAddress from "../mobile/pages/NewMobileAddress";
 import OrdersMobile from "../mobile/pages/Orders";
 import ProfileMobile from "../mobile/pages/ProfileMobile";
 import ProtectedRoute from "../services/protectedRoute";
 import { selectAllProducts } from "../store/product-slice";
+import PasswordEdit from "../mobile/pages/PasswordEdit";
 
 const Profile = () => {
   const products = useSelector(selectAllProducts);
@@ -79,6 +82,16 @@ const Profile = () => {
       <ProtectedRoute path="/profile/inbox" component={InboxMobile} />
       <ProtectedRoute path="/profile/orders/open" component={OrdersMobile} />
       <ProtectedRoute path="/profile/orders/closed" component={OrdersMobile} />
+      <ProtectedRoute
+        path="/profile/address/display"
+        component={AddressMobile}
+      />
+      <ProtectedRoute path="/profile/password-edit" component={PasswordEdit} />
+      <ProtectedRoute path="/profile/address/edit" component={EditAddress} />
+      <ProtectedRoute
+        path="/profile/address/new"
+        component={NewMobileAddress}
+      />
       <ProtectedRoute
         path="/profile/personal-details"
         component={DetailsMobile}

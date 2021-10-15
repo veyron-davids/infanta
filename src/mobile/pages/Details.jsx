@@ -11,7 +11,9 @@ const DetailsMobile = () => {
         <ProfileTitle locations="/profile" title="Edit Personal Information" />
         <DetailsForm />
       </div>
-      <Footer />
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };

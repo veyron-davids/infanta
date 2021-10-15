@@ -10,22 +10,23 @@
   padding: 10px;
   margin: 8px;
   border-radius: 5px;
-  border: 1px solid #232f3e;
-  color: #232f3e;
+  border: 1px solid #bd281c;
+  color: #bd281c;
   cursor: pointer;
+   
 }
 
 .paginationBttns a:hover {
-  color: white;
-  background-color: #232f3e;
+  color: #bd281c;
+  background-color: white
 }
 
 .paginationActive a {
   color: white;
-  background-color: #232f3e;
+  background-color: #bd281c;
 }
 
 .paginationDisabled a {
-  color: grey;
-  background-color: #f2f3f3;
+  color: #bd281c;
+  background-color: white;
 }

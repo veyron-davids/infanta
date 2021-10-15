@@ -31,6 +31,9 @@ const InputField = ({
   error,
   helperText,
   reset,
+  defaultValue,
+  type,
+  max,
 }) => {
   return (
     <CssTextField
@@ -45,6 +48,9 @@ const InputField = ({
       helperText={helperText}
       error={error}
       onBlur={reset}
+      defaultValue={defaultValue}
+      type={type}
+      inputProps={max}
     />
   );
 };

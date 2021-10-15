@@ -10,9 +10,13 @@ import particlesOptions from "../particlesjs-config";
 import auth from "../services/authService";
 
 const Account = () => {
+
   useEffect(() => {
-    auth.logout();
+    if (auth.getCurrentUser()) {
+      window.location = "/";
+    }
   }, []);
+  
   return (
     <React.Fragment>
       <div className={account.container}>

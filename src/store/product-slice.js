@@ -5,7 +5,7 @@ import http from "../services/httpService";
 const initialState = {
   products: [],
   grid: true,
-  loading:false,
+  loading: false,
 };
 //PRODUCTS//
 
@@ -49,8 +49,8 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     switchView(state) {
-      state.grid = !state.grid
-    }
+      state.grid = !state.grid;
+    },
   },
   extraReducers: {
     [fetchProducts.pending]: (state, action) => {

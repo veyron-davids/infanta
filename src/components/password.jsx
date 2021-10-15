@@ -1,7 +1,7 @@
 import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import MuiAlert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,20 +13,20 @@ import { selectUser } from "../store/auth-slice";
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },
@@ -44,7 +44,6 @@ const Password = () => {
     newpassword: "",
     confirmPassword: "",
   });
-  const [emailError, setEmailError] = useState();
   const [cuError, setcuError] = useState();
   const [nwError, setnwError] = useState();
   const [cnError, setcnError] = useState();
@@ -62,9 +61,6 @@ const Password = () => {
     setError(false);
   };
 
-  const resetemError = () => {
-    setEmailError(null);
-  };
   const resetcuError = () => {
     setcuError(null);
   };
@@ -84,7 +80,6 @@ const Password = () => {
         values.newpassword.trim().length === 0 ||
         values.confirmPassword.trim().length === 0
       ) {
-        setEmailError("This field is required");
         setcuError("This field is required");
         setnwError("This field is required");
         setcnError("This field is required");

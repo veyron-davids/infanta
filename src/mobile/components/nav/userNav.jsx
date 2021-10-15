@@ -4,14 +4,14 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RiUserFollowLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
+import { selectCartCount } from "../../../store/cart-slice";
 import { toggleDrawer } from "../../../store/mobile-slice";
 import MnavUser from "../../css/nav.module.css";
-import { selectCartCount } from "../../../store/cart-slice";
 
 const UserNav = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-    const cartTotal = useSelector(selectCartCount);
+  const cartTotal = useSelector(selectCartCount);
   return (
     <div className={MnavUser.container}>
       <div className={MnavUser.container__sec__one}>
@@ -40,7 +40,7 @@ const UserNav = () => {
           <RiUserFollowLine />
         </NavLink>
         <NavLink
-          to=""
+          to="/cart/summary"
           style={{ textDecoration: "none" }}
           // activeClassName={MnavUser.active}
           className={MnavUser.navlink}

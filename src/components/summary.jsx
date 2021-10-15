@@ -49,8 +49,6 @@ const Summary = ({ title, open, handleSubmit }) => {
       });
   };
 
-  console.log(data);
-
   useEffect(() => {
     getOrders();
   }, []);
@@ -122,7 +120,8 @@ const Summary = ({ title, open, handleSubmit }) => {
             <button
               className={citem.button}
               onClick={() => {
-                dispatch(AddOrders(data));
+                history.push("/cart/payment");
+                // dispatch(AddOrders(data));
                 //  handleFlutterPayment({
                 //     callback: (response) => {
                 //       if (response.status === "successful") {
@@ -144,7 +143,6 @@ const Summary = ({ title, open, handleSubmit }) => {
                 //   })
               }}
             >
-              {" "}
               {title}
             </button>
           )}

@@ -35,7 +35,8 @@ const VariantInput = ({
   helperText,
   reset,
   type,
-  max
+  max,
+  defaultValue
 }) => {
   return (
     <CssTextField
@@ -46,7 +47,6 @@ const VariantInput = ({
       type={type}
       disabled={disabled}
       required={required}
-      id="custom-css-outlined-input"
       value={value}
       onChange={(e) => handleChange(e.target.value)}
       //   onChange={(e) => handleChange(e.target.value)}
@@ -54,6 +54,7 @@ const VariantInput = ({
       error={error}
       onBlur={reset}
       inputProps={max}
+      defaultValue={defaultValue}
     />
   );
 };

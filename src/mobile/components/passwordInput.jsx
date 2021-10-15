@@ -65,15 +65,13 @@ const PasswordInput = ({
   };
 
   return (
-    <CssOutline variant="outlined" helperText={helperText} >
+    <CssOutline variant="outlined" helperText={helperText}>
       <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
       <OutlinedInput
-        id="outlined-adornment-password"
         type={values.showPassword ? "text" : "password"}
         className={style}
         onBlur={onBlur}
         error={error}
-
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         endAdornment={

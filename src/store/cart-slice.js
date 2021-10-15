@@ -144,12 +144,12 @@ const cartSlice = createSlice({
       }
       state.cartCount = 0;
       state.totalAmt = 0;
+      
+
+
       state.cart.map((item) => {
         state.cartCount = Number(state.cartCount) + Number(item.total);
-        state.totalAmt =
-          Number(item.total) *
-            Number(item.productId ? item.productId.price : 0) +
-          Number(state.totalAmt);
+        state.totalAmt =  Number(item.total) *  Number(item.productId ? item.productId.price : 0) + Number(state.totalAmt);
       });
 
       state.loading = false;

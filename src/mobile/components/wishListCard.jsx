@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
 import { IoMdTrash } from "react-icons/io";
-import { usePaystackPayment } from "react-paystack";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {
+  handleClick,
+  removeAll,
+  removeItem,
+  setItemToAdd,
+} from "../../store/cart-slice";
 import wish from "../css/profile.module.css";
 
-const WishListCard = () => {
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: "user@example.com",
-    amount: 20000,
-    publicKey: "pk_test_cd2e3fab775fb1a46cb0f23bc0935d599aba6a7b",
-  };
+const WishListCard = ({ product, handleError }) => {
+  const dispatch = useDispatch();
+  const productDetails = product.productId;
+  const sizes = product.size;
+  const prodPrice = productDetails.price ? productDetails.price : 0;
+  const prodTotal = product.total ? product.total : 0;
+  const ProductTotal = Number(prodTotal) * Number(prodPrice);
+  const [error, setError] = useState(false);
 
-  const initializePayment = usePaystackPayment(config);
+  function currencyFormat(num) {
+    return "₦" + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
-  // you can call this function anything
-  const onSuccess = (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
-  };
+  const price = productDetails ? currencyFormat(prodPrice) : 0;
+  const total = productDetails ? currencyFormat(ProductTotal) : 0;
 
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
-  };
+  const route = useLocation();
+
   return (
     <div className={wish.wishcard__container}>
       <div className={wish.wishcard__container__leveone}>
@@ -35,31 +40,82 @@ const WishListCard = () => {
         </div>
         <div className={wish.wishcard__details}>
           <div>
-            <span>PS3 Slim Console 320GB Plus 2 ...</span>
+            <span>{productDetails.pname}</span>
             <br />
             <br />
-            <span>N2000</span>
+            <span>{price}</span>
             <br />
             <br />
-            <span>Size: M</span>
+            <div className={wish.size__details}>
+              {sizes.small !== 0 && (
+                <span id={wish.size}>Small: {sizes.small}</span>
+              )}
+              {sizes.medium !== 0 && (
+                <span id={wish.size}>medium: {sizes.medium}</span>
+              )}
+              {sizes.large !== 0 && (
+                <span id={wish.size}>large: {sizes.large}</span>
+              )}
+              {sizes.xlarge !== 0 && (
+                <span id={wish.size}>xlarge: {sizes.xlarge}</span>
+              )}
+              {sizes.xxlarge !== 0 && (
+                <span id={wish.size}>xxlarge: {sizes.xxlarge}</span>
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <div className={wish.wishcard__container__levetwo}>
-        <div id={wish.remove}>
-          <IoMdTrash />
-          <span>REMOVE</span>
+      {route.pathname === "/wishlist" && (
+        <div className={wish.wishcard__container__levetwo}>
+          <div id={wish.remove}>
+            <IoMdTrash />
+            <span>REMOVE</span>
+          </div>
+          <button className={wish.out}>BUY</button>
+          {/* <button className={wish.buy}>OUT OF STOCK</button> */}
         </div>
-        <button
-          className={wish.out}
-          onClick={() => {
-            initializePayment(onSuccess, onClose);
-          }}
-        >
-          BUY
-        </button>
-        {/* <button className={wish.buy}>OUT OF STOCK</button> */}
-      </div>
+      )}
+      {route.pathname === "/cart/summary" && (
+        <div className={wish.wishcard__container__levetwo}>
+          <div className={wish.hearted}>
+            <div id={wish.heart}>
+              <AiOutlineHeart />
+            </div>
+            <div
+              id={wish.remove}
+              onClick={() => {
+                try {
+                  dispatch(removeItem({ productID: productDetails._id })).then(
+                    (data) => {
+                      if (data.meta.requestStatus === "fulfilled") {
+                        dispatch(removeAll({ id: productDetails._id }));
+                      } else if (data.meta.requestStatus === "rejected") {
+                        handleError();
+                      }
+                    }
+                  );
+                } catch (error) {
+                  handleError();
+                }
+              }}
+            >
+              <IoMdTrash />
+              <span>REMOVE</span>
+            </div>
+          </div>
+          <button
+            className={wish.out}
+            onClick={() => {
+              dispatch(setItemToAdd(productDetails._id));
+              dispatch(handleClick());
+            }}
+          >
+            EDIT
+          </button>
+          {/* <button className={wish.buy}>OUT OF STOCK</button> */}
+        </div>
+      )}
     </div>
   );
 };

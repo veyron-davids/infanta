@@ -3,7 +3,8 @@ import ReactPaginate from "react-paginate";
 import { useSelector } from "react-redux";
 import all from "../../mobile/css/products.module.css";
 import { selectAllProducts } from "../../store/product-slice";
-import {selectGrid } from "../../store/mobile-slice";
+import { selectOpen, handleClick } from "../../store/cart-slice";
+import { selectGrid } from "../../store/mobile-slice";
 import GridCards from "./gridCards";
 import ListCards from "./listCards";
 import auth from "../../services/authService";
@@ -13,7 +14,7 @@ const AllProducts = () => {
   const currentUser = auth.getCurrentUser();
   const products = useSelector(selectAllProducts);
   const [pageNumber, setPageNumber] = useState(0);
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const open = useSelector(selectOpen);
   const grid = useSelector(selectGrid);
 
   const productsPerPage = 12;
@@ -27,13 +28,9 @@ const AllProducts = () => {
     window.scrollTo({ behavior: "smooth", top: "0px" });
   }, [pageNumber]);
 
-
-  const handleOpenDrawer = () => {
-  setOpenDrawer(!openDrawer);
-}  
   return (
     <div className={all.container}>
-      {openDrawer && currentUser && <BottomDrawer handleOpenDrawer={handleOpenDrawer} />}
+      {open && currentUser && <BottomDrawer />}
       <div className={all.container__title}>ALL PRODUCTS</div>
       <div className={all.container__content}>
         {grid &&
@@ -44,7 +41,7 @@ const AllProducts = () => {
               <GridCards
                 key={item._id}
                 product={item}
-                handleOpenDrawer={handleOpenDrawer}
+                handleOpenDrawer={handleClick}
               />
             ))}
         {!grid &&
@@ -55,7 +52,7 @@ const AllProducts = () => {
               <ListCards
                 key={item._id}
                 product={item}
-                handleOpenDrawer={handleOpenDrawer}
+                handleOpenDrawer={handleClick}
               />
             ))}
       </div>

@@ -109,6 +109,7 @@
 }
 
 .snack {
+  font-size: 1rem;
   display: flex;
   align-items: center;
   height: 2.2rem;

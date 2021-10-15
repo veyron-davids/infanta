@@ -14,20 +14,20 @@ import Summary from "./summary";
 const CssTextField = withStyles({
   root: {
     "& label.Mui-focused": {
-      color: "#232f3e;",
+      color: "#bd281c;",
     },
     "& .MuiInput-underline:after": {
-      borderBottomColor: "#232f3e;",
+      borderBottomColor: "#bd281c;",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "black",
+        borderColor: "#bd281c;",
       },
-      // "&:hover fieldset": {
-      //   borderColor: "yellow",
-      // },
+      "&:hover fieldset": {
+        borderColor: "#bd281c;",
+      },
       "&.Mui-focused fieldset": {
-        borderColor: "#232f3e;",
+        borderColor: "#bd281c;",
       },
     },
   },
@@ -78,7 +78,7 @@ const Delivery = () => {
             setDefaultAdd(item);
           }
         });
-    } else if (user.address.length === 0 && useAdd === true) {
+    } else if (user && user.address.length === 0 && useAdd === true) {
       setError(true);
     }
   };
@@ -254,7 +254,7 @@ const Delivery = () => {
           )}
         </form>
       </div>
-      <Summary title="CHECKOUT" open={false} handleSubmit={doSubmit} />
+      <Summary title="PROCEED" open={false} handleSubmit={doSubmit} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React from "react";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import over from "../css/overlay.module.css";
 import {
   addToCart,
@@ -32,6 +32,7 @@ const Overlay = () => {
   const success = useSelector(selectSuccess);
   const error = useSelector(selectFail);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSuccessClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -39,7 +40,7 @@ const Overlay = () => {
     }
     dispatch(onSuccess());
   };
-  
+
   const handleErrorClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -90,7 +91,6 @@ const Overlay = () => {
           </Alert>
         </Snackbar>
       )}
-
       <div
         className={over.container}
         onClick={() =>
@@ -118,6 +118,7 @@ const Overlay = () => {
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare
               className={over.shadow}
+              id={product.size.small === 0 ? over.opaque : ""}
               onClick={() => {
                 dispatch(
                   removeFromCart({
@@ -161,6 +162,7 @@ const Overlay = () => {
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare
               className={over.shadow}
+              id={product.size.medium === 0 ? over.opaque : ""}
               onClick={() => {
                 dispatch(
                   removeFromCart({
@@ -205,6 +207,7 @@ const Overlay = () => {
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare
               className={over.shadow}
+              id={product.size.large === 0 ? over.opaque : ""}
               onClick={() => {
                 dispatch(
                   removeFromCart({
@@ -249,6 +252,7 @@ const Overlay = () => {
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare
               className={over.shadow}
+              id={product.size.xlarge === 0 ? over.opaque : ""}
               onClick={() => {
                 dispatch(
                   removeFromCart({
@@ -292,6 +296,7 @@ const Overlay = () => {
           <div className={over.overlay__list__icons}>
             <AiFillMinusSquare
               className={over.shadow}
+              id={product.size.xxlarge === 0 ? over.opaque : ""}
               onClick={() => {
                 dispatch(
                   removeFromCart({
@@ -334,14 +339,19 @@ const Overlay = () => {
           >
             CONTINUE SHOPPING
           </button>
-          <NavLink to="/cart/summary">
-            <button
-              className={over.overlay__buttons__two}
-              onClick={() => dispatch(handleClick())}
-            >
-              VIEW CART AND CHECK OUT
-            </button>
-          </NavLink>
+          {/* <NavLink
+            to="/cart/summary"
+            style={{ textDecoration: "none", border: "none" }}
+          > */}
+          <button
+            className={over.overlay__buttons__two}
+            onClick={() =>
+              dispatch(handleClick(), history.push("/cart/summary"))
+            }
+          >
+            VIEW CART AND CHECK OUT
+          </button>
+          {/* </NavLink> */}
         </div>
       </div>
     </React.Fragment>

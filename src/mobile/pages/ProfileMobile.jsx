@@ -59,16 +59,24 @@ const ProfileMobile = () => {
             <span>Details</span>
             <CgArrowRight id={prof.view} />
           </NavLink>
-          <div className={prof.profile__item}>
+          <NavLink
+            to="/profile/address/display"
+            className={prof.profile__item}
+            style={{ textDecoration: "none" }}
+          >
             <TiLocationOutline id={prof.icon} />
             <span>Address Book</span>
             <CgArrowRight id={prof.view} />
-          </div>
-          <div className={prof.profile__item}>
+          </NavLink>
+          <NavLink
+            to="/profile/password-edit"
+            className={prof.profile__item}
+            style={{ textDecoration: "none" }}
+          >
             <RiLockPasswordLine id={prof.icon} />
             <span>Change Password</span>
             <CgArrowRight id={prof.view} />
-          </div>
+          </NavLink>
         </div>
         <NavLink to="/signout" style={{ textDecoration: "none" }}>
           <div className={prof.logout}>LOGOUT</div>

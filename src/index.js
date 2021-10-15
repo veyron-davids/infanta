@@ -9,9 +9,8 @@ import { fetchUser} from "./store/auth-slice";
 import { fetchCart } from "./store/cart-slice";
 import store from "./store/index";
 
-store.dispatch(fetchUser());
-store.dispatch(fetchCart());
-console.log("idexjs");
+// store.dispatch(fetchUser());
+// store.dispatch(fetchCart());
 
 ReactDOM.render(
   <BrowserRouter>

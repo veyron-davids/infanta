@@ -1,14 +1,15 @@
 import React from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import inbox from "../css/profile.module.css";
 
-const ProfileTitle = ({ locations, title }) => {
+const ProfileTitle = ({ title }) => {
+  const history = useHistory();
   return (
     <div className={inbox.inbox__title}>
-      <NavLink to={locations}>
+      <div onClick={() => history.goBack()}>
         <IoIosArrowRoundBack id={inbox.burger} />
-      </NavLink>
+      </div>
       <span>{title}</span>
     </div>
   );

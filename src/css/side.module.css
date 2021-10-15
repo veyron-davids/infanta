@@ -25,18 +25,20 @@
   -webkit-animation: slide-in-bottom 0.5s both;
   animation: slide-in-bottom 0.5s both;
   font-size: 1.1rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .division__one:hover {
   background-color: white;
-  border: 1px solid #232f3e;
-  color: black;
+  border: 1px solid #bd281c;
+  color: #bd281c;
 }
 
 a.active {
   background-color: white;
-  border: 1px solid #232f3e;
-  color: black;
+  border: 1px solid #bd281c;
+  color: #bd281c;
 }
 
 .division__two {
@@ -54,12 +56,14 @@ a.active {
   cursor: pointer;
   -webkit-animation: slide-in-bottom 1s both;
   animation: slide-in-bottom 1s both;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .division__two:hover {
   background-color: white;
-  border: 1px solid #232f3e;
-  color: black;
+  border: 1px solid #bd281c;
+  color: #bd281c;;
 }
 
 .division__three {
@@ -77,12 +81,14 @@ a.active {
   cursor: pointer;
   -webkit-animation: slide-in-bottom 1.5s both;
   animation: slide-in-bottom 1.5s both;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .division__three:hover {
   background-color: white;
-  border: 1px solid #232f3e;
-  color: black;
+  border: 1px solid #bd281c;
+  color: #bd281c;
 }
 
 .division__four {
@@ -100,12 +106,14 @@ a.active {
   cursor: pointer;
   -webkit-animation: slide-in-bottom 2s both;
   animation: slide-in-bottom 2s both;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .division__four:hover {
   background-color: white;
-  border: 1px solid #232f3e;
-  color: black;
+  border: 1px solid #bd281c;
+  color: #bd281c;
 }
 
 @-webkit-keyframes slide-in-bottom {

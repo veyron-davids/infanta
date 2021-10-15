@@ -14,6 +14,12 @@
   bottom: 0;
 }
 
+@media (max-width: 768px) {
+  .container {
+    display: none;
+  }
+}
+
 .container__inside {
   display: flex;
   flex-direction: column;
@@ -25,6 +31,12 @@
   top: 15%;
   left: 33%;
   padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .container__inside {
+    display: none;
+  }
 }
 
 .overlay__title {
@@ -59,9 +71,14 @@
 
 .shadow {
   cursor: pointer;
+  color: #bd281c;
   box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
   -webkit-box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
   -moz-box-shadow: -4px 7px 28px -15px rgba(0, 0, 0, 0.87);
+}
+
+#opaque {
+  opacity: 0.5;
 }
 
 .overlay__list__icons > span {
@@ -89,30 +106,33 @@
   text-transform: uppercase;
   height: 3rem;
   background-color: white;
-  color: black;
+  color: #da493e;
   margin-right: 1rem;
-  box-shadow: 0 3px 7px 0 rgb(0 0 0 / 13%);
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
   outline: white !important;
   cursor: pointer;
   font-weight: bold;
 }
 .overlay__buttons__one:hover {
-  background-color: #ffc0c0;
+  background-color: #da493e;
+  color: white;
 }
 .overlay__buttons__two {
   flex: 1;
   text-transform: uppercase;
-  outline: 1px solid #232f3e;
+  outline: 1px solid #bd281c;
   height: 3rem;
-  background-color: #232f3e;
+  background-color: #bd281c;
+  outline: #bd281c !important;
   color: white;
-  outline: #232f3e;
-  box-shadow: 0 3px 7px 0 rgb(0 0 0 / 13%);
+  outline-color: #bd281c;
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   font-weight: bold;
 }
 .overlay__buttons__two:hover {
-  background-color: #232f3e;
+  color: #da493e;
+  background-color: white;
 }
 
 .overlay__buttons > button:focus {

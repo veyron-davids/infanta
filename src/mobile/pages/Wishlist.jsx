@@ -7,21 +7,32 @@ import ProfileTitle from "../components/profileTitle";
 import Random from "../components/random";
 import WishListCard from "../components/wishListCard";
 import wish from "../css/profile.module.css";
+import {
+  selectCart,
+} from "../../store/cart-slice";
 
 const WishlistMobile = () => {
   const products = useSelector(selectAllProducts);
+   const cart = useSelector(selectCart);
   return (
     <div className={wish.wish__container}>
       <div>
         <ProfileTitle locations="/profile" title="Items You Liked" />
+        {cart &&
+          cart.map((item) => (
+            <WishListCard
+              key={item.productId._id}
+              product={item}
+            />
+          ))}
+        {/* <WishListCard />
         <WishListCard />
         <WishListCard />
         <WishListCard />
         <WishListCard />
         <WishListCard />
         <WishListCard />
-        <WishListCard />
-        <WishListCard />
+        <WishListCard /> */}
       </div>
       <div>
         <div className={wish.collections}>
